@@ -1,0 +1,70 @@
+{% extends 'index.html' %} {% block title %}Homepage{% endblock %} {% block
+content %}
+<h1 id="header-hompage">this is the homepage</h1>
+<div class="container">
+  <div class="obligate-field">
+    <form action="#" id="first-field">
+      <div class="input-group mb-3" id="name-field">
+        <input
+          type="text"
+          name="nameInput"
+          class="form-control"
+          placeholder="Name"
+          aria-label="Name"
+          aria-describedby="basic-addon1"
+        />
+        <input
+          type="text"
+          name="ageInput"
+          class="form-control"
+          placeholder="Age"
+          aria-label="Age"
+          aria-describedby="basic-addon1"
+        />
+        <input
+          type="text"
+          name="roleInput"
+          class="form-control"
+          placeholder="Role"
+          aria-label="Role"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+      <div class="input-group mb-3" id="name-field">
+        <input
+          type="text"
+          name="companyInput"
+          class="form-control"
+          placeholder="Company"
+          aria-label="Company"
+          aria-describedby="basic-addon1"
+        />
+        <input
+          type="text"
+          name="cityInput"
+          class="form-control"
+          placeholder="City"
+          aria-label="City"
+          aria-describedby="basic-addon1"
+        />
+        <input
+          type="text"
+          name="zipInput"
+          class="form-control"
+          placeholder="Zip"
+          aria-label="Zip"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+      <div class="the-button">
+        <input
+          type="button"
+          id="btnSubmit"
+          class="btn btn-outline-success"
+          value="Submit"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
