@@ -8,6 +8,7 @@ content %}
         <input
           type="text"
           name="nameInput"
+          id="nameInput"
           class="form-control"
           placeholder="Name"
           aria-label="Name"
@@ -16,6 +17,7 @@ content %}
         <input
           type="text"
           name="ageInput"
+          id="ageInput"
           class="form-control"
           placeholder="Age"
           aria-label="Age"
@@ -24,6 +26,7 @@ content %}
         <input
           type="text"
           name="roleInput"
+          id="roleInput"
           class="form-control"
           placeholder="Role"
           aria-label="Role"
@@ -34,6 +37,7 @@ content %}
         <input
           type="text"
           name="companyInput"
+          id="companyInput"
           class="form-control"
           placeholder="Company"
           aria-label="Company"
@@ -42,6 +46,7 @@ content %}
         <input
           type="text"
           name="cityInput"
+          id="cityInput"
           class="form-control"
           placeholder="City"
           aria-label="City"
@@ -50,6 +55,7 @@ content %}
         <input
           type="text"
           name="zipInput"
+          id="zipInput"
           class="form-control"
           placeholder="Zip"
           aria-label="Zip"
@@ -67,4 +73,21 @@ content %}
     </form>
   </div>
 </div>
+
+<script>
+
+  document.getElementById("cityInput").addEventListener("input", sendText);
+
+  function sendText() {
+    var c = document.getElementById("cityInput").value;
+    fetch("/api", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ cityInput: c }),
+    })
+  }
+</script>
 {% endblock %}
