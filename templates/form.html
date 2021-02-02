@@ -1,78 +1,26 @@
 {% extends 'index.html' %} {% block title %}Homepage{% endblock %} {% block
-content %}
-<h1 id="header-hompage">this is the homepage</h1>
-<div class="container">
-  <div class="obligate-field">
-    <form action="#" id="first-field">
-      <div class="input-group mb-3" id="name-field">
-        <input
-          type="text"
-          name="nameInput"
-          id="nameInput"
-          class="form-control"
-          placeholder="Name"
-          aria-label="Name"
-          aria-describedby="basic-addon1"
-        />
-        <input
-          type="text"
-          name="ageInput"
-          id="ageInput"
-          class="form-control"
-          placeholder="Age"
-          aria-label="Age"
-          aria-describedby="basic-addon1"
-        />
-        <input
-          type="text"
-          name="roleInput"
-          id="roleInput"
-          class="form-control"
-          placeholder="Role"
-          aria-label="Role"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-      <div class="input-group mb-3" id="name-field">
-        <input
-          type="text"
-          name="companyInput"
-          id="companyInput"
-          class="form-control"
-          placeholder="Company"
-          aria-label="Company"
-          aria-describedby="basic-addon1"
-        />
-        <input
-          type="text"
-          name="cityInput"
-          id="cityInput"
-          class="form-control"
-          placeholder="City"
-          aria-label="City"
-          aria-describedby="basic-addon1"
-        />
-        <input
-          type="text"
-          name="zipInput"
-          id="zipInput"
-          class="form-control"
-          placeholder="Zip"
-          aria-label="Zip"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-      <div class="the-button">
-        <input
-          type="button"
-          id="btnSubmit"
-          class="btn btn-outline-success"
-          value="Submit"
-        />
-      </div>
-    </form>
-  </div>
-</div>
+  content %}
 
+  <h1 id="header-hompage">this is the homepage</h1>
+  <div class="container">
+  <form action="{{url_for('index')}}" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+      {{ form.name(class='sth', placeholder="name", id="nameInput") }}
+      {{ form.age(class='sth',placeholder="age", id="ageInput") }}
+      {{ form.role(class='sth',placeholder="role", id="roleInput") }}
+      <br>
+      <br>
+      <div>
+        {{ form.company(class='sth', placeholder="company", id="companyInput") }}
+        {{ form.city(class='sth',placeholder="city", id="cityInput") }}
+        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+      </div>
+      <br>
+      <br>
+      <div>
+      {{ form.submit(class="btn btn-outline-success") }}
+    </div>
+  </form>
+</div>
 <script src="../static/trackchange.js"></script>
-{% endblock %}
+  {% endblock %}

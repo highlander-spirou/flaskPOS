@@ -20,7 +20,7 @@ def CountLine(filename):
 
 def ClearCache(filename):
     lines = CountLine(filename)
-    if lines > 100:
+    if lines > 50:
         t = ReadCache(filename)
         with open(filename, 'w') as txt:
             txt.write(t)

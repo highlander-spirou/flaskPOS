@@ -2,7 +2,7 @@ document.getElementById("cityInput").addEventListener("input", sendText);
 
 function sendText() {
   var c = document.getElementById("cityInput").value;
-  fetch("/api", {
+  fetch("/cache", {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
