@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from cacheHandler import *
@@ -15,6 +15,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
 class Input(db.Model):
 
     __tablename__ = 'input'
@@ -56,6 +58,10 @@ class Companies(db.Model):
     def __repr__(self):
         return f"id: {self.id}, company: {self.company}"
 
+class InputSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Input
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -90,7 +96,10 @@ def cache():
 
 @app.route('/table')
 def table():
-    pass
+    inputs = Input.query.all()
+    input_schema = InputSchema(many=True)
+    output = input_schema.dump(inputs)
+    return jsonify(output)
 
 
 
