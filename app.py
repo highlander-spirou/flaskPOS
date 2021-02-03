@@ -105,6 +105,9 @@ def tabledata():
 def table():
     return render_template('table.html')
 
+@app.route('/press')
+def press():
+    return render_template('pressme.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
