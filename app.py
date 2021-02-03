@@ -94,13 +94,16 @@ def cache():
             t = ReadCache('cache.txt')
             return json.loads(t)
 
-@app.route('/table')
-def table():
+@app.route('/tabledata')
+def tabledata():
     inputs = Input.query.all()
     input_schema = InputSchema(many=True)
     output = input_schema.dump(inputs)
     return jsonify(output)
 
+@app.route('/table')
+def table():
+    return render_template('table.html')
 
 
 if __name__ == '__main__':
