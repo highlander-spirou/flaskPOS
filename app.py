@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm
+from forms import InputForm, EditForm, DeleteForm
 
 app = Flask(__name__)
 
@@ -101,6 +101,24 @@ def tabledata():
 
 @app.route('/table', methods=["GET", "POST"])
 def table():
+    form = EditForm()
+        if form.validate_on_submit():
+            new_name=form.name.data,
+            new_age=form.age.data,
+            new_role=form.role.data,
+            new_company=form.company.data,
+            new_city=form.city.data,
+            new_zipcode=form.zipcode.data
+        instance = Input.query.filter_by(name=new_name).first()
+        instance.age = new_age
+        instance.role = new_role
+        instance.company = new_company
+        instance.city = new_city
+        instance.zipcode = new_zipcode
+        db.session.commit()
+        
+
+    form2 = DeleteForm()
     return render_template('table.html')
 
 

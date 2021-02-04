@@ -4,6 +4,35 @@
 
 {% block content %}
 
+<div class="edit-wrapper">
+    <form action="{{url_for('table')}}" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.name(class='sth', placeholder="name", id="nameInput") }}
+        {{ form.age(class='sth',placeholder="age", id="ageInput") }}
+        {{ form.role(class='sth',placeholder="role", id="roleInput") }}
+        <br>
+        <br>
+        <div>
+        {{ form.company(class='sth', placeholder="company", id="companyInput") }}
+        {{ form.city(class='sth',placeholder="city", id="cityInput") }}
+        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+        </div>
+        <br>
+        <br>
+        <div>
+        {{ form.submit(class="btn btn-outline-success", value="Submit") }}
+      </div>
+    </form>
+</div>
+
+<div class="delete-wrapper">
+    <form action="{{url_for('table')}}" method="post">
+        {{ form2.hidden_tag() }}
+        {{ form2.id(class='sth', placeholder="ID", id="deleteID") }}
+        {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
+    </form>
+</div>
+
 
 <div id="table">
     <table id="table-data" class="table table-striped table-hover">

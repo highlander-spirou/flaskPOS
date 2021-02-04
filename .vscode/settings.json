@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "/home/shyn/.local/share/virtualenvs/projectPOS-dIybFRce/bin/python",
+    "python.pythonPath": "/home/let/.local/share/virtualenvs/flask_POS-YkDJQoHN/bin/python",
     "python.formatting.provider": "black"
 }
