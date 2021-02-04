@@ -18,19 +18,22 @@ const deepFind = (f, obj = {}) =>
 
 
 window.onload = function () {
-  document.getElementById("input1").addEventListener("input", getText);
+  document.getElementById("companyInput").addEventListener("input", getText);
 };
 
 function getText() {
-  var c = document.getElementById("input1").value;
+  var c = document.getElementById("companyInput").value;
+  console.log(c);
   fetch("/tabledata")
     .then((res) => res.json())
     .then((data) => {
-      const d = deepFind((x) => x.name === c, data);
+      const d = deepFind((x) => x.company === c, data);
       if (typeof d !== "undefined") {
-        document.getElementById("input2").value = d.company;
+        document.getElementById("cityInput").value = d.city;
+        document.getElementById("zipInput").value = d.zipcode;
       } else {
-        document.getElementById("input2").value = "";
+        document.getElementById("cityInput").value = "";
+        document.getElementById("zipInput").value = "";
       }
     });
 }

@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from cacheHandler import *
 import os
 import json
 from forms import InputForm
@@ -81,8 +80,7 @@ def index():
 
     return render_template('form.html', form=form)
 
-@app.route('/cache', methods=["GET", "POST"])
-def cache():
+
     if request.method == "POST":
         c = request.get_data()
         d = c.decode("utf8")
@@ -94,20 +92,18 @@ def cache():
             t = ReadCache('cache.txt')
             return json.loads(t)
 
-@app.route('/tabledata')
+@app.route('/tabledata', methods=["GET", "POST"])
 def tabledata():
     inputs = Input.query.all()
     input_schema = InputSchema(many=True)
     output = input_schema.dump(inputs)
     return jsonify(output)
 
-@app.route('/table')
+@app.route('/table', methods=["GET", "POST"])
 def table():
     return render_template('table.html')
 
-@app.route('/press')
-def press():
-    return render_template('pressme.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
