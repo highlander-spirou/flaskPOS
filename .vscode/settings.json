@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "/home/let/.local/share/virtualenvs/flask_POS-YkDJQoHN/bin/python",
+    "python.pythonPath": "C:\\Users\\LETPC\\.virtualenvs\\FlaskPOS-5cm5P-J4\\Scripts\\python.exe",
     "python.formatting.provider": "black"
 }
