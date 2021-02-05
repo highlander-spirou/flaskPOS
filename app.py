@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm, EditForm, DeleteForm
+from forms import InputForm, EditForm, DeleteForm, FixedForm
 
 app = Flask(__name__)
 
@@ -80,9 +80,6 @@ def index():
 
     return render_template('form.html', form=form)
 
-
-
-
 @app.route('/tabledata', methods=["GET", "POST"])
 def tabledata():
     inputs = Input.query.all()
@@ -119,7 +116,42 @@ def table():
 
     return render_template('table.html', form=form, form2=form2)
 
+@app.route('/fixed')
+def fixed():
+    data_companies = Companies.query.all()
+    return render_template('fix_data.html', data_companies=data_companies)
 
+@app.route('/fixed_data')
+def fixed_data():
+    companies = Companies.query.all()
+    company_list = []
+    company_dict={}
+    for company in companies:
+        company_dict['id'] = company.id
+        company_dict['company'] = company.company
+        company_dict['city'] = company.city
+        company_dict['zipcode'] = company.zipcode
+        company_list.append(company_dict)
+    
+    return jsonify(company_list)
+
+
+@app.route('/fixed/create', methods=["POST", "GET"])
+def fixed_create():
+    form = FixedForm()
+    if form.validate_on_submit():
+        fix_company = form.company.data
+        fix_city = form.city.data
+        fix_zipcode = form.zipcode.data
+        new_instance = Companies(fix_company, fix_city, fix_zipcode)
+        db.session.add(new_instance)
+        db.session.commit()
+
+    return render_template('fix_create.html', form=form)
+
+@app.route('/fixed/delete', methods=["POST", "GET"])
+def fixed_delete():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)

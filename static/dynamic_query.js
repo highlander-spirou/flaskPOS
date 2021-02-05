@@ -24,7 +24,7 @@ window.onload = function () {
 function getText() {
   var c = document.getElementById("companyInput").value;
   console.log(c);
-  fetch("/tabledata")
+  fetch("/fixed_data")
     .then((res) => res.json())
     .then((data) => {
       const d = deepFind((x) => x.company === c, data);
