@@ -81,16 +81,7 @@ def index():
     return render_template('form.html', form=form)
 
 
-    if request.method == "POST":
-        c = request.get_data()
-        d = c.decode("utf8")
-        ClearCache('cache.txt')
-        WriteCache('cache.txt', d)
 
-    else:
-        if ReadCache('cache.txt') != "":
-            t = ReadCache('cache.txt')
-            return json.loads(t)
 
 @app.route('/tabledata', methods=["GET", "POST"])
 def tabledata():

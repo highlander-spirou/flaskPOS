@@ -23,3 +23,10 @@ class EditForm(FlaskForm):
 class DeleteForm(FlaskForm):
     id = IntegerField("ID", validators=[DataRequired()])
     submit = SubmitField('DELETE')
+
+
+class FixedForm(FlaskForm):
+    company = StringField('Company', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    zipcode = StringField('Zipcode', validators=[DataRequired()])
+    submit = SubmitField('Submit')

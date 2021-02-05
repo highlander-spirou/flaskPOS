@@ -13,9 +13,9 @@ $(document).ready(function(){
             tableData += '<td><div contenteditable="true">'+value.company+'</div></td>';
             tableData += '<td><div contenteditable="true">'+value.city+'</div></td>';
             tableData += '<td><div contenteditable="true">'+value.zipcode+'</div></td>';
-            tableData += '<td><button class="btn_edit"><a class="btn btn-link">Edit</a></button></td>';
-            tableData += '<td><button class="btn_delete"><a class="btn btn-link">Delete</a></button></td>';
-            tableData += '<td><button class="btn_cancel"><a class="btn btn-link">Cancel</a></button></td>';
+            tableData += '<td><button class="btn btn-outline-secondary"><span class="btn_edit">Edit</span></button></td>';
+            tableData += '<td><button class="btn btn-outline-danger"><span class="btn_delete">Delete</span></button></td>';
+            tableData += '<td><button class="btn btn-warning"><span class="btn_cancel">Cancel</span></button></td>';
             tableData += '</tr>';
         });
         $('#table-data').append(tableData);
