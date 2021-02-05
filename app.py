@@ -102,13 +102,14 @@ def tabledata():
 @app.route('/table', methods=["GET", "POST"])
 def table():
     form = EditForm()
-        if form.validate_on_submit():
-            new_name=form.name.data,
-            new_age=form.age.data,
-            new_role=form.role.data,
-            new_company=form.company.data,
-            new_city=form.city.data,
-            new_zipcode=form.zipcode.data
+    if form.validate_on_submit():
+        new_name=form.name.data
+        new_age=form.age.data
+        new_role=form.role.data
+        new_company=form.company.data
+        new_city=form.city.data
+        new_zipcode=form.zipcode.data
+
         instance = Input.query.filter_by(name=new_name).first()
         instance.age = new_age
         instance.role = new_role
@@ -116,10 +117,16 @@ def table():
         instance.city = new_city
         instance.zipcode = new_zipcode
         db.session.commit()
-        
+    
 
     form2 = DeleteForm()
-    return render_template('table.html')
+    if form2.validate_on_submit():
+        del_id = form2.id.data
+        instance = Input.query.get(del_id)
+        db.session.delete(instance)
+        db.session.commit()
+
+    return render_template('table.html', form=form, form2=form2)
 
 
 
