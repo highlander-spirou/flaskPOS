@@ -9,6 +9,10 @@ flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 flask-wtf = "*"
 marshmallow-sqlalchemy = "*"
+numpy = "*"
+pandas = "*"
+xlwings = "*"
+openpyxl = "*"
 
 [dev-packages]
 

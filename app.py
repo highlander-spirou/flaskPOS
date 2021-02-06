@@ -125,8 +125,9 @@ def fixed():
 def fixed_data():
     companies = Companies.query.all()
     company_list = []
-    company_dict={}
+    
     for company in companies:
+        company_dict={}
         company_dict['id'] = company.id
         company_dict['company'] = company.company
         company_dict['city'] = company.city
