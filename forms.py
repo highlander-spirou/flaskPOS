@@ -1,3 +1,4 @@
+from itertools import product
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
@@ -49,5 +50,15 @@ class CompanyForm(FlaskForm):
 
 
 class CompanyDeleteForm(FlaskForm):
+    id = IntegerField("ID", validators=[DataRequired()])
+    submit = SubmitField('DELETE')
+
+
+class ProductForm(FlaskForm):
+    product = StringField('Product', validators=[DataRequired()])
+    hs_code = StringField('hs_code', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class ProductDeleteForm(FlaskForm):
     id = IntegerField("ID", validators=[DataRequired()])
     submit = SubmitField('DELETE')

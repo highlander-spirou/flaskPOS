@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm
 
 app = Flask(__name__)
 
@@ -223,6 +223,51 @@ def company_delete():
     db.session.commit()
 
     return redirect(url_for('companytable'))
+
+
+
+@app.route('/producttable', methods=["POST", "GET"])
+def producttable():
+    data_products = Products.query.all()
+    form = ProductForm()
+    form2 = ProductDeleteForm()
+    return render_template('productTable.html', data_products=data_products, form=form, form2=form2)
+
+@app.route('/productdata') #JSON file here
+def productdata():
+    products = Products.query.all()
+    product_list = []
+    
+    for product in products:
+        product_dict={}
+        product_dict['id'] = product.id
+        product_dict['product'] = product.name
+        product_dict['hs_code'] = product.code
+        product_list.append(product_dict)
+    
+    return jsonify(product_list)
+
+
+@app.route('/product/create', methods=["POST", "GET"])
+def product_create():
+    product = request.form['product']
+    hs_code = request.form['hs_code']
+    new_instance = Products(product, hs_code)
+    db.session.add(new_instance)
+    db.session.commit()
+
+    return redirect(url_for("producttable"))
+
+@app.route('/product/delete', methods=["POST", "GET"])
+def product_delete():
+
+    del_id = request.form['id']
+    instance = Products.query.get(del_id)
+    db.session.delete(instance)
+    db.session.commit()
+
+    return redirect(url_for('producttable'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

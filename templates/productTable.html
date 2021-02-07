@@ -8,17 +8,14 @@
 <span class="btn-company"><button type="button" id="create" class="btn btn-secondary">Create</button></span>
 <span class="btn-company"><button type="button" id="delete" class="btn btn-danger">Delete</button></span>
 <span class="btn-company"><button type="button" id="cancel" class="btn btn-outline-dark">Cancel</button></span>
-
 <br>
 <br>
 <div class="create-wrapper">
-<form action="{{url_for('company_create')}}" method="POST" novalidate>
+<form action="{{url_for('product_create')}}" method="POST" novalidate>
     {{ form.hidden_tag() }}
       <div>
-        {{ form.company(class='sth', placeholder="Company", id="companyInput") }}
-        {{ form.address(class='sth',placeholder="Address", id="addressInput") }}
-        {{ form.telephone(class='sth',placeholder="Telephone", id="telephoneInput") }}
-        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+        {{ form.product(class='sth', placeholder="Product Name", id="productInput") }}
+        {{ form.hs_code(class='sth',placeholder="HS Code", id="hscodeInput") }}
       </div>
       <br>
       <div class="container">
@@ -30,7 +27,7 @@
 <br>
 
 <div class="delete-wrapper">
-  <form action="{{url_for('company_delete')}}" method="POST" novalidate>
+  <form action="{{url_for('product_delete')}}" method="POST" novalidate>
     {{ form2.hidden_tag() }}
       <div>
         {{ form2.id(class='sth', placeholder="ID", id="idDelete") }}
@@ -44,20 +41,16 @@
 
 <br>
 
-<div class="company-table-wrapper">
+<div class="product-table-wrapper">
     <table>
         <th>ID</th>
-        <th>Company</th>
-        <th>Address</th>
-        <th>Telephone</th>
-        <th>Zip code</th>
-        {% for company in data_companies %}
+        <th>Product</th>
+        <th>HS Code</th>
+        {% for product in data_products %}
             <tr>
-                <td>{{company.id}}</td>
-                <td>{{company.company}}</td>
-                <td>{{company.address}}</td>
-                <td>{{company.telephone}}</td>
-                <td>{{company.zipcode}}</td>
+                <td>{{product.id}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.code}}</td>
             </tr>
         {% endfor %}
     </table>
