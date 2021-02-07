@@ -21,24 +21,38 @@ class Input(db.Model):
     __tablename__ = 'input'
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(64), index=True)
-    age = db.Column(db.Integer)
-    role = db.Column(db.String(64))
-    company = db.Column(db.String(64))
-    city = db.Column(db.String(64))
+    bill_number = db.Column(db.String(64), index=True)
+    shipper_name = db.Column(db.String(64), index=True)
+    consignee_name = db.Column(db.String(64), index=True) #company name
+    client_name = db.Column(db.String(64))  #optional
+    consignee_address = db.Column(db.String(500))
+    consignee_telephone = db.Column(db.String(64))
+    cargo_pcs = db.Column(db.Integer) 
+    cargo_weight = db.Column(db.Integer) 
+    pp_cc = db.Column(db.String(5))
+    hs_code = db.Column(db.Integer)
+    cargo_item = db.Column(db.String(500))
+    invoice_value = db.Column(db.Integer)
     zipcode = db.Column(db.String(64))
 
 
-    def __init__(self, name, age, role, company, city, zipcode):
-        self.name = name
-        self.age = age
-        self.role = role
-        self.company = company
-        self.city = city
+    def __init__(self, bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, zipcode,  client_name ="None"):
+        self.bill_number = bill_number
+        self.shipper_name = shipper_name
+        self.consignee_name = consignee_name #company name
+        self.client_name = client_name #keyword argument "None"
+        self.consignee_address = consignee_address
+        self.consignee_telephone = consignee_telephone
+        self.cargo_pcs = cargo_pcs
+        self.cargo_weight = cargo_weight
+        self.pp_cc = pp_cc
+        self.hs_code = hs_code
+        self.cargo_item = cargo_item
+        self.invoice_value = invoice_value
         self.zipcode = zipcode
 
     def __repr__(self):
-        return f"id: {self.id}, name:{self.name}, company: {self.company}"
+        return f"id: {self.id}, bill:{self.bill_number}, from: {self.shipper_name}, to: {self.consignee_name}"
 
 class Companies(db.Model):
 
@@ -46,16 +60,33 @@ class Companies(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
     company = db.Column(db.String(64))
-    city = db.Column(db.String(64))
+    address = db.Column(db.String(500))
     zipcode = db.Column(db.String(64))
 
-    def __init__(self, company, city, zipcode):
+    def __init__(self, company, address, zipcode):
         self.company = company
-        self.city = city
+        self.address = address
         self.zipcode = zipcode
 
     def __repr__(self):
         return f"id: {self.id}, company: {self.company}"
+
+class Products(db.Model):
+
+    __tablename__ = 'products'
+
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(64))
+    code = db.Column(db.String(64))
+    
+
+    def __init__(self, name, code):
+        self.name = name
+        self.code = code
+
+    def __repr__(self):
+        return f"id: {self.id}, product name: {self.name}"
+
 
 class InputSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -65,18 +96,18 @@ class InputSchema(ma.SQLAlchemyAutoSchema):
 @app.route('/', methods=["GET", "POST"])
 def index():
     form=InputForm()
-    if form.validate_on_submit():
-        new_instance = Input(name=form.name.data,
-                age=form.age.data,
-                role=form.role.data,
-                company=form.company.data,
-                city=form.city.data,
-                zipcode=form.zipcode.data)
+    # if form.validate_on_submit():
+    #     new_instance = Input(name=form.name.data,
+    #             age=form.age.data,
+    #             role=form.role.data,
+    #             company=form.company.data,
+    #             city=form.city.data,
+    #             zipcode=form.zipcode.data)
         
-        db.session.add(new_instance)
-        db.session.commit()
+    #     db.session.add(new_instance)
+    #     db.session.commit()
 
-        return redirect(url_for('index'))
+    #     return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
 

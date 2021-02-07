@@ -5,15 +5,30 @@
   <div class="container">
   <form action="{{url_for('index')}}" method="POST" novalidate>
     {{ form.hidden_tag() }}
-      {{ form.name(class='sth', placeholder="name", id="nameInput") }}
-      {{ form.age(class='sth',placeholder="age", id="ageInput") }}
-      {{ form.role(class='sth',placeholder="role", id="roleInput") }}
+      {{ form.bill_number(class='sth', placeholder="bill_number", id="nameInput") }}
+      {{ form.shipper_name (class='sth',placeholder="shipper_name", id="ageInput") }}
+      {{ form.consignee_name (class='sth',placeholder="consignee_name", id="roleInput") }}
       <br>
       <br>
       <div>
-        {{ form.company(class='sth', placeholder="company", id="companyInput") }}
-        {{ form.city(class='sth',placeholder="city", id="cityInput") }}
-        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+        {{ form.client_name (class='sth', placeholder="client_name", id="companyInput") }}
+        {{ form.consignee_address (class='sth',placeholder="client_address ", id="cityInput") }}
+        {{ form.consignee_telephone (class='sth',placeholder="client_telephone ", id="zipInput") }}
+      </div>
+      <br>
+      <br>
+      <div>
+        {{ form.cargo_pcs  (class='sth', placeholder="cargo_pcs ", id="companyInput") }}
+        {{ form.cargo_weight  (class='sth',placeholder="cargo_weight ", id="cityInput") }}
+        {{ form.pp_cc (class='sth',placeholder="pp_cc ", id="zipInput") }}
+      </div>
+      <br>
+      <br>
+      <div>
+        {{ form.hs_code (class='sth', placeholder="hs_code ", id="companyInput") }}
+        {{ form.cargo_item (class='sth',placeholder="cargo_item ", id="cityInput") }}
+        {{ form.invoice_value (class='sth',placeholder="invoice_value ", id="zipInput") }}
+        {{ form.zipcode(class='sth',placeholder="zipcode ", id="zipInput") }}
       </div>
       <br>
       <br>
