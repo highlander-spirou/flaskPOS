@@ -5,30 +5,30 @@
   <div class="container">
   <form action="{{url_for('index')}}" method="POST" novalidate>
     {{ form.hidden_tag() }}
-      {{ form.bill_number(class='sth', placeholder="bill_number", id="nameInput") }}
-      {{ form.shipper_name (class='sth',placeholder="shipper_name", id="ageInput") }}
-      {{ form.consignee_name (class='sth',placeholder="consignee_name", id="roleInput") }}
+      {{ form.bill_number(class='sth', placeholder="bill_number", id="bill_numberInput") }}
+      {{ form.shipper_name(class='sth',placeholder="shipper_name", id="shipper_nameInput") }}
+      {{ form.consignee_name(class='sth',placeholder="consignee_name", id="consignee_nameInput") }}
       <br>
       <br>
       <div>
-        {{ form.client_name (class='sth', placeholder="client_name", id="companyInput") }}
-        {{ form.consignee_address (class='sth',placeholder="client_address ", id="cityInput") }}
-        {{ form.consignee_telephone (class='sth',placeholder="client_telephone ", id="zipInput") }}
+        {{ form.client_name(class='sth', placeholder="client_name", id="client_nameInput") }}
+        {{ form.consignee_address(class='sth',placeholder="consignee_address ", id="consignee_addressInput") }}
+        {{ form.consignee_telephone(class='sth',placeholder="consignee_telephone ", id="consignee_telephoneInput") }}
       </div>
       <br>
       <br>
       <div>
-        {{ form.cargo_pcs  (class='sth', placeholder="cargo_pcs ", id="companyInput") }}
-        {{ form.cargo_weight  (class='sth',placeholder="cargo_weight ", id="cityInput") }}
-        {{ form.pp_cc (class='sth',placeholder="pp_cc ", id="zipInput") }}
+        {{ form.cargo_pcs(class='sth', placeholder="cargo_pcs ", id="cargo_pcsInput") }}
+        {{ form.cargo_weight(class='sth',placeholder="cargo_weight ", id="cargo_weightInput") }}
+        {{ form.pp_cc(class='sth',placeholder="pp_cc ", id="pp_ccInput") }}
       </div>
       <br>
       <br>
       <div>
-        {{ form.hs_code (class='sth', placeholder="hs_code ", id="companyInput") }}
-        {{ form.cargo_item (class='sth',placeholder="cargo_item ", id="cityInput") }}
-        {{ form.invoice_value (class='sth',placeholder="invoice_value ", id="zipInput") }}
-        {{ form.zipcode(class='sth',placeholder="zipcode ", id="zipInput") }}
+        {{ form.hs_code(class='sth', placeholder="hs_code ", id="hs_codeInput") }}
+        {{ form.cargo_item(class='sth',placeholder="cargo_item ", id="cargo_itemInput") }}
+        {{ form.invoice_value(class='sth',placeholder="invoice_value ", id="invoice_valueInput") }}
+        {{ form.zipcode(class='sth',placeholder="zipcode ", id="zipcodeInput") }}
       </div>
       <br>
       <br>

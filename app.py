@@ -40,7 +40,6 @@ class Input(db.Model):
         self.bill_number = bill_number
         self.shipper_name = shipper_name
         self.consignee_name = consignee_name #company name
-        self.client_name = client_name #keyword argument "None"
         self.consignee_address = consignee_address
         self.consignee_telephone = consignee_telephone
         self.cargo_pcs = cargo_pcs
@@ -50,6 +49,7 @@ class Input(db.Model):
         self.cargo_item = cargo_item
         self.invoice_value = invoice_value
         self.zipcode = zipcode
+        self.client_name = client_name #keyword argument "None"
 
     def __repr__(self):
         return f"id: {self.id}, bill:{self.bill_number}, from: {self.shipper_name}, to: {self.consignee_name}"
@@ -61,6 +61,7 @@ class Companies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     company = db.Column(db.String(64))
     address = db.Column(db.String(500))
+    telephone = db.Column(db.String(64))
     zipcode = db.Column(db.String(64))
 
     def __init__(self, company, address, zipcode):
@@ -96,18 +97,27 @@ class InputSchema(ma.SQLAlchemyAutoSchema):
 @app.route('/', methods=["GET", "POST"])
 def index():
     form=InputForm()
-    # if form.validate_on_submit():
-    #     new_instance = Input(name=form.name.data,
-    #             age=form.age.data,
-    #             role=form.role.data,
-    #             company=form.company.data,
-    #             city=form.city.data,
-    #             zipcode=form.zipcode.data)
-        
-    #     db.session.add(new_instance)
-    #     db.session.commit()
+    if form.validate_on_submit():
+        bill_number=form.bill_number.data
+        shipper_name = form.shipper_name.data
+        consignee_name = form.consignee_name.data
+        client_name = form.client_name.data
+        consignee_address = form.consignee_address.data
+        consignee_telephone = form.consignee_telephone.data
+        cargo_pcs = form.cargo_pcs.data
+        cargo_weight = form.cargo_weight.data
+        pp_cc = form.pp_cc.data
+        hs_code = form.hs_code.data
+        cargo_item = form.cargo_item.data
+        invoice_value = form.invoice_value.data
+        zipcode = form.zipcode.data
 
-    #     return redirect(url_for('index'))
+        new_instance = Input(bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, zipcode, client_name)
+        
+        db.session.add(new_instance)
+        db.session.commit()
+
+        return redirect(url_for('index'))
 
     return render_template('form.html', form=form)
 
@@ -122,30 +132,50 @@ def tabledata():
 def table():
     form = EditForm()
     if form.validate_on_submit():
-        new_name=form.name.data
-        new_age=form.age.data
-        new_role=form.role.data
-        new_company=form.company.data
-        new_city=form.city.data
-        new_zipcode=form.zipcode.data
+        id = form.id.data
+        bill_number=form.bill_number.data
+        shipper_name = form.shipper_name.data
+        consignee_name = form.consignee_name.data
+        client_name = form.client_name.data
+        consignee_address = form.consignee_address.data
+        consignee_telephone = form.consignee_telephone.data
+        cargo_pcs = form.cargo_pcs.data
+        cargo_weight = form.cargo_weight.data
+        pp_cc = form.pp_cc.data
+        hs_code = form.hs_code.data
+        cargo_item = form.cargo_item.data
+        invoice_value = form.invoice_value.data
+        zipcode = form.zipcode.data
 
-        instance = Input.query.filter_by(name=new_name).first()
-        instance.age = new_age
-        instance.role = new_role
-        instance.company = new_company
-        instance.city = new_city
-        instance.zipcode = new_zipcode
+        instance = Input.query.get(id)
+        instance.bill_number = bill_number
+        instance.shipper_name = shipper_name
+        instance.consignee_name = consignee_name #company name
+        instance.consignee_address = consignee_address
+        instance.consignee_telephone = consignee_telephone
+        instance.cargo_pcs = cargo_pcs
+        instance.cargo_weight = cargo_weight
+        instance.pp_cc = pp_cc
+        instance.hs_code = hs_code
+        instance.cargo_item = cargo_item
+        instance.invoice_value = invoice_value
+        instance.zipcode = zipcode
+        instance.client_name = client_name
         db.session.commit()
     
 
     form2 = DeleteForm()
-    if form2.validate_on_submit():
-        del_id = form2.id.data
-        instance = Input.query.get(del_id)
-        db.session.delete(instance)
-        db.session.commit()
 
     return render_template('table.html', form=form, form2=form2)
+
+@app.route('/delete', methods=["GET", "POST"])
+def delete():
+    del_id = request.form['id']
+    instance = Input.query.get(del_id)
+    db.session.delete(instance)
+    db.session.commit()
+    return redirect(url_for('table'))
+
 
 @app.route('/fixed')
 def fixed():

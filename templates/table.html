@@ -7,17 +7,34 @@
 <div class="edit-wrapper">
     <form action="{{url_for('table')}}" method="post">
         {{ form.hidden_tag() }}
-        {{ form.name(class='sth', placeholder="name", id="nameInput") }}
-        {{ form.age(class='sth',placeholder="age", id="ageInput") }}
-        {{ form.role(class='sth',placeholder="role", id="roleInput") }}
+        {{ form.id(class='sth', placeholder="ID", id="idEdit") }}
+        {{ form.bill_number(class='sth', placeholder="bill_number", id="bill_numberEdit") }}
+        {{ form.shipper_name (class='sth',placeholder="shipper_name", id="shipper_nameEdit") }}
+        {{ form.consignee_name (class='sth',placeholder="consignee_name", id="consignee_nameEdit") }}
         <br>
         <br>
         <div>
-        {{ form.company(class='sth', placeholder="company", id="companyInput") }}
-        {{ form.city(class='sth',placeholder="city", id="cityInput") }}
-        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+          {{ form.client_name (class='sth', placeholder="client_name", id="client_nameEdit") }}
+          {{ form.consignee_address (class='sth',placeholder="consignee_address ", id="consignee_addressEdit") }}
+          {{ form.consignee_telephone (class='sth',placeholder="consignee_telephone ", id="consignee_telephoneEdit") }}
         </div>
-
+        <br>
+        <br>
+        <div>
+          {{ form.cargo_pcs (class='sth', placeholder="cargo_pcs ", id="cargo_pcsEdit") }}
+          {{ form.cargo_weight (class='sth',placeholder="cargo_weight ", id="cargo_weightEdit") }}
+          {{ form.pp_cc (class='sth',placeholder="pp_cc ", id="pp_ccEdit") }}
+        </div>
+        <br>
+        <br>
+        <div>
+          {{ form.hs_code (class='sth', placeholder="hs_code ", id="hs_codeEdit") }}
+          {{ form.cargo_item (class='sth',placeholder="cargo_item ", id="cargo_itemEdit") }}
+          {{ form.invoice_value (class='sth',placeholder="invoice_value ", id="invoice_valueEdit") }}
+          {{ form.zipcode(class='sth',placeholder="zipcode ", id="zipcodeEdit") }}
+        </div>
+        <br>
+        <br>
         <div>
         {{ form.submit(class="btn btn-outline-success", value="Submit") }}
       </div>
@@ -25,7 +42,7 @@
 </div>
 
 <div class="delete-wrapper">
-    <form action="{{url_for('table')}}" method="post">
+    <form action="{{url_for('delete')}}" method="post">
         {{ form2.hidden_tag() }}
         {{ form2.id(class='sth', placeholder="ID", id="deleteID") }}
         {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
@@ -37,12 +54,22 @@
     <table id="table-data" class="table table-striped table-hover">
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Role</th>
-            <th>Company</th>
-            <th>City</th>
-            <th>Zipcode</th>
+            <th>bill_number</th>
+            <th>shipper_name</th>
+            <th>consignee_name </th>
+            <th>client_name </th>
+            <th>consignee_address </th>
+            <th>consignee_telephone </th>
+            <th>cargo_pcs </th>
+            <th>cargo_weight </th>
+            <th>pp_cc </th>
+            <th>hs_code </th>
+            <th>cargo_item </th>
+            <th>invoice_value </th>
+            <th>zipcode </th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Cancel</th>
         </tr>
     </table>
 </div>
