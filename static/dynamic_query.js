@@ -18,22 +18,24 @@ const deepFind = (f, obj = {}) =>
 
 
 window.onload = function () {
-  document.getElementById("companyInput").addEventListener("input", getText);
+  document.getElementById("consignee_nameInput").addEventListener("input", getText);
 };
 
 function getText() {
-  var c = document.getElementById("companyInput").value;
+  var c = document.getElementById("consignee_nameInput").value;
   console.log(c);
-  fetch("/fixed_data")
+  fetch("/companydata")
     .then((res) => res.json())
     .then((data) => {
       const d = deepFind((x) => x.company === c, data);
       if (typeof d !== "undefined") {
-        document.getElementById("cityInput").value = d.city;
-        document.getElementById("zipInput").value = d.zipcode;
+        document.getElementById("consignee_addressInput").value = d.address;
+        document.getElementById("consignee_telephoneInput").value = d.telephone;
+        document.getElementById("zipcodeInput").value = d.zipcode;
       } else {
-        document.getElementById("cityInput").value = "";
-        document.getElementById("zipInput").value = "";
+        document.getElementById("consignee_addressInput").value = "";
+        document.getElementById("consignee_telephoneInput").value = "";
+        document.getElementById("zipcodeInput").value = "";
       }
     });
 }

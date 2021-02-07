@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm, EditForm, DeleteForm, FixedForm
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm
 
 app = Flask(__name__)
 
@@ -64,9 +64,10 @@ class Companies(db.Model):
     telephone = db.Column(db.String(64))
     zipcode = db.Column(db.String(64))
 
-    def __init__(self, company, address, zipcode):
+    def __init__(self, company, address, telephone, zipcode):
         self.company = company
         self.address = address
+        self.telephone = telephone
         self.zipcode = zipcode
 
     def __repr__(self):
@@ -177,13 +178,15 @@ def delete():
     return redirect(url_for('table'))
 
 
-@app.route('/fixed')
-def fixed():
+@app.route('/companytable', methods=["POST", "GET"])
+def companytable():
     data_companies = Companies.query.all()
-    return render_template('fix_data.html', data_companies=data_companies)
+    form = CompanyForm()
+    form2 = CompanyDeleteForm()
+    return render_template('companyTable.html', data_companies=data_companies, form=form, form2=form2)
 
-@app.route('/fixed_data')
-def fixed_data():
+@app.route('/companydata') #JSON file here
+def companydata():
     companies = Companies.query.all()
     company_list = []
     
@@ -191,29 +194,35 @@ def fixed_data():
         company_dict={}
         company_dict['id'] = company.id
         company_dict['company'] = company.company
-        company_dict['city'] = company.city
+        company_dict['address'] = company.address
+        company_dict['telephone'] = company.telephone
         company_dict['zipcode'] = company.zipcode
         company_list.append(company_dict)
     
     return jsonify(company_list)
 
 
-@app.route('/fixed/create', methods=["POST", "GET"])
-def fixed_create():
-    form = FixedForm()
-    if form.validate_on_submit():
-        fix_company = form.company.data
-        fix_city = form.city.data
-        fix_zipcode = form.zipcode.data
-        new_instance = Companies(fix_company, fix_city, fix_zipcode)
-        db.session.add(new_instance)
-        db.session.commit()
+@app.route('/company/create', methods=["POST", "GET"])
+def company_create():
+    company = request.form['company']
+    address = request.form['address']
+    telephone = request.form['telephone']
+    zipcode = request.form['zipcode']
+    new_instance = Companies(company, address, telephone, zipcode)
+    db.session.add(new_instance)
+    db.session.commit()
 
-    return render_template('fix_create.html', form=form)
+    return redirect(url_for("companytable"))
 
-@app.route('/fixed/delete', methods=["POST", "GET"])
-def fixed_delete():
-    pass
+@app.route('/company/delete', methods=["POST", "GET"])
+def company_delete():
+
+    del_id = request.form['id']
+    instance = Companies.query.get(del_id)
+    db.session.delete(instance)
+    db.session.commit()
+
+    return redirect(url_for('companytable'))
 
 if __name__ == '__main__':
     app.run(debug=True)

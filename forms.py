@@ -40,8 +40,14 @@ class DeleteForm(FlaskForm):
     submit = SubmitField('DELETE')
 
 
-class FixedForm(FlaskForm):
+class CompanyForm(FlaskForm):
     company = StringField('Company', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
+    address = StringField('Address', validators=[DataRequired()])
+    telephone = StringField('Telephone', validators=[DataRequired()])
     zipcode = StringField('Zipcode', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class CompanyDeleteForm(FlaskForm):
+    id = IntegerField("ID", validators=[DataRequired()])
+    submit = SubmitField('DELETE')

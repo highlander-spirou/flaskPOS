@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+{% block title %}Company Data{% endblock %}
+
+{% block content %}
+<br>
+
+<span class="btn-company"><button type="button" id="create_company" class="btn btn-secondary">Create</button></span>
+<span class="btn-company"><button type="button" id="delete_company" class="btn btn-danger">Delete</button></span>
+
+<br>
+<br>
+<div class="company-create-wrapper">
+<form action="{{url_for('company_create')}}" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+      <div>
+        {{ form.company(class='sth', placeholder="Company", id="companyInput") }}
+        {{ form.address(class='sth',placeholder="Address", id="addressInput") }}
+        {{ form.telephone(class='sth',placeholder="Telephone", id="telephoneInput") }}
+        {{ form.zipcode(class='sth',placeholder="zip code", id="zipInput") }}
+      </div>
+      <br>
+      <div class="container">
+      {{ form.submit(class="btn btn-outline-success", value="Submit") }}
+    </div>
+  </form>
+</div>
+
+<br>
+
+<div class="company-delete-wraper">
+  <form action="{{url_for('company_delete')}}" method="POST" novalidate>
+    {{ form2.hidden_tag() }}
+      <div>
+        {{ form2.id(class='sth', placeholder="ID", id="idDelete") }}
+      </div>
+      <br>
+      <div class="container">
+      {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
+    </div>
+  </form>
+</div>
+
+<br>
+
+<div class="company-table-wrapper">
+    <table>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Address</th>
+        <th>Telephone</th>
+        <th>Zip code</th>
+        {% for company in data_companies %}
+            <tr>
+                <td>{{company.id}}</td>
+                <td>{{company.company}}</td>
+                <td>{{company.address}}</td>
+                <td>{{company.telephone}}</td>
+                <td>{{company.zipcode}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
