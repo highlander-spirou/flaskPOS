@@ -4,8 +4,15 @@ import pandas as pd
 from app import db
 import xlwings as xw
 
-df = pd.read_sql_query('select * from Input', db.engine)
+query = """
+SELECT """ + """bill_number, shipper_name, consignee_name, client_name""" + """FROM Input
+WHERE invoice_value >= 200
+"""
+
+
+df = pd.read_sql_query(query, db.engine)
 print(df)
+
 
 # app = xw.App(visible=False)
 # wbExcel = xw.Book('sth.xlsx')

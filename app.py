@@ -28,15 +28,16 @@ class Input(db.Model):
     consignee_address = db.Column(db.String(500))
     consignee_telephone = db.Column(db.String(64))
     cargo_pcs = db.Column(db.Integer) 
-    cargo_weight = db.Column(db.Integer) 
+    cargo_weight = db.Column(db.Float) 
     pp_cc = db.Column(db.String(5))
     hs_code = db.Column(db.Integer)
     cargo_item = db.Column(db.String(500))
-    invoice_value = db.Column(db.Integer)
+    invoice_value = db.Column(db.Float)
+    bag_number = db.Column(db.String(64))
     zipcode = db.Column(db.String(64))
 
 
-    def __init__(self, bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, zipcode,  client_name ="None"):
+    def __init__(self, bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, bag_number, zipcode, client_name ="None"):
         self.bill_number = bill_number
         self.shipper_name = shipper_name
         self.consignee_name = consignee_name #company name
@@ -48,6 +49,7 @@ class Input(db.Model):
         self.hs_code = hs_code
         self.cargo_item = cargo_item
         self.invoice_value = invoice_value
+        self.bag_number = bag_number
         self.zipcode = zipcode
         self.client_name = client_name #keyword argument "None"
 
@@ -111,9 +113,10 @@ def index():
         hs_code = form.hs_code.data
         cargo_item = form.cargo_item.data
         invoice_value = form.invoice_value.data
+        bag_number = form.bag_number.data
         zipcode = form.zipcode.data
 
-        new_instance = Input(bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, zipcode, client_name)
+        new_instance = Input(bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, bag_number, zipcode, client_name)
         
         db.session.add(new_instance)
         db.session.commit()
@@ -146,6 +149,7 @@ def table():
         hs_code = form.hs_code.data
         cargo_item = form.cargo_item.data
         invoice_value = form.invoice_value.data
+        bag_number = form.bag_number.data
         zipcode = form.zipcode.data
 
         instance = Input.query.get(id)
@@ -160,6 +164,7 @@ def table():
         instance.hs_code = hs_code
         instance.cargo_item = cargo_item
         instance.invoice_value = invoice_value
+        instance.bag_number = bag_number
         instance.zipcode = zipcode
         instance.client_name = client_name
         db.session.commit()

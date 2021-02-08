@@ -1,6 +1,6 @@
 from itertools import product
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, FloatField
 from wtforms.validators import DataRequired
 
 class InputForm(FlaskForm):
@@ -11,11 +11,12 @@ class InputForm(FlaskForm):
     consignee_address = StringField('client_address', validators=[DataRequired()])
     consignee_telephone = StringField('client_telephone', validators=[DataRequired()])
     cargo_pcs = IntegerField('cargo_pcs', validators=[DataRequired()])
-    cargo_weight = IntegerField('cargo_weight', validators=[DataRequired()])    
+    cargo_weight = FloatField('cargo_weight', validators=[DataRequired()])    
     pp_cc = StringField('pp_cc', validators=[DataRequired()])
     hs_code = IntegerField('hs_code', validators=[DataRequired()])
     cargo_item = StringField('cargo_item', validators=[DataRequired()])
-    invoice_value = IntegerField('invoice_value', validators=[DataRequired()])
+    invoice_value = FloatField('invoice_value', validators=[DataRequired()])
+    bag_number = StringField('bag_number', validators=[DataRequired()])
     zipcode = StringField('zipcode', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
@@ -28,11 +29,12 @@ class EditForm(FlaskForm):
     consignee_address = StringField('client_address', validators=[DataRequired()])
     consignee_telephone = StringField('client_telephone', validators=[DataRequired()])
     cargo_pcs = IntegerField('cargo_pcs', validators=[DataRequired()])
-    cargo_weight = IntegerField('cargo_weight', validators=[DataRequired()])    
+    cargo_weight = FloatField('cargo_weight', validators=[DataRequired()])    
     pp_cc = StringField('pp_cc', validators=[DataRequired()])
     hs_code = IntegerField('hs_code', validators=[DataRequired()])
     cargo_item = StringField('cargo_item', validators=[DataRequired()])
-    invoice_value = IntegerField('invoice_value', validators=[DataRequired()])
+    invoice_value = FloatField('invoice_value', validators=[DataRequired()])
+    bag_number = StringField('bag_number', validators=[DataRequired()])
     zipcode = StringField('zipcode', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
