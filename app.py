@@ -21,20 +21,20 @@ class Input(db.Model):
     __tablename__ = 'input'
 
     id = db.Column(db.Integer, primary_key = True)
-    bill_number = db.Column(db.String(64), index=True)
-    shipper_name = db.Column(db.String(64), index=True)
-    consignee_name = db.Column(db.String(64), index=True) #company name
-    client_name = db.Column(db.String(64))  #optional
-    consignee_address = db.Column(db.String(500))
-    consignee_telephone = db.Column(db.String(64))
-    cargo_pcs = db.Column(db.Integer) 
-    cargo_weight = db.Column(db.Float) 
-    pp_cc = db.Column(db.String(5))
-    hs_code = db.Column(db.Integer)
-    cargo_item = db.Column(db.String(500))
-    invoice_value = db.Column(db.Float)
-    bag_number = db.Column(db.String(64))
-    zipcode = db.Column(db.String(64))
+    bill_number = db.Column(db.String(64), index=True) # E2
+    shipper_name = db.Column(db.String(64), index=True) # O2
+    consignee_name = db.Column(db.String(64), index=True) #T2
+    client_name = db.Column(db.String(64))  #optional, T2, join method
+    consignee_address = db.Column(db.String(500)) # U2
+    consignee_telephone = db.Column(db.String(64)) # X2
+    cargo_pcs = db.Column(db.Integer) # H2
+    cargo_weight = db.Column(db.Float) # I2
+    pp_cc = db.Column(db.String(5)) # K2
+    hs_code = db.Column(db.Integer) # L2
+    cargo_item = db.Column(db.String(500)) # M2
+    invoice_value = db.Column(db.Float) # N2
+    bag_number = db.Column(db.String(64)) 
+    zipcode = db.Column(db.String(64)) # AA2
 
 
     def __init__(self, bill_number, shipper_name, consignee_name, consignee_address, consignee_telephone, cargo_pcs, cargo_weight, pp_cc, hs_code, cargo_item, invoice_value, bag_number, zipcode, client_name ="None"):
