@@ -1,4 +1,3 @@
-from itertools import product
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FloatField
 from wtforms.validators import DataRequired
@@ -62,5 +61,31 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class ProductDeleteForm(FlaskForm):
+    id = IntegerField("ID", validators=[DataRequired()])
+    submit = SubmitField('DELETE')
+
+
+
+class HansolInputForm(FlaskForm):
+    bill_number = StringField('bill_number', validators=[DataRequired()])
+    shipper_name = StringField('shipper_name', validators=[DataRequired()])
+    consignee_name = StringField('consignee_name', validators=[DataRequired()])
+    cargo_pcs = IntegerField('cargo_pcs', validators=[DataRequired()])
+    cargo_weight = FloatField('cargo_weight', validators=[DataRequired()])    
+    cargo_item = StringField('cargo_item', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class HansolEditForm(FlaskForm):
+    id = IntegerField('ID', validators=[DataRequired()])
+    bill_number = StringField('bill_number', validators=[DataRequired()])
+    shipper_name = StringField('shipper_name', validators=[DataRequired()])
+    consignee_name = StringField('consignee_name', validators=[DataRequired()])
+    cargo_pcs = IntegerField('cargo_pcs', validators=[DataRequired()])
+    cargo_weight = FloatField('cargo_weight', validators=[DataRequired()])    
+    cargo_item = StringField('cargo_item', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class HansolDeleteForm(FlaskForm):
     id = IntegerField("ID", validators=[DataRequired()])
     submit = SubmitField('DELETE')

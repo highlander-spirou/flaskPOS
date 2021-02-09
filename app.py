@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm
 
 app = Flask(__name__)
 
@@ -91,6 +91,28 @@ class Products(db.Model):
     def __repr__(self):
         return f"id: {self.id}, product name: {self.name}"
 
+class Hansoll(db.Model):
+
+    __tablename__ = "hansoll"
+    id = db.Column(db.Integer, primary_key = True)
+    bill_number = db.Column(db.String(64))
+    shipper_name = db.Column(db.String(64))
+    cargo_item = db.Column(db.String(64))
+    cargo_pcs = db.Column(db.Integer)
+    cargo_weight = db.Column(db.Float)
+    consignee_name = db.Column(db.String(64))
+
+    def __init__(self, bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight, consignee_name):
+        self.bill_number = bill_number
+        self.shipper_name = shipper_name
+        self.cargo_item = cargo_item
+        self.cargo_pcs = cargo_pcs
+        self.cargo_weight = cargo_weight
+        self.consignee_name = consignee_name
+
+
+    def __repr__(self):
+        return f"id: {self.id}, bill: {self.bill_number}, shipper: {self.shipper_name}, client: {self.consignee_name}"
 
 class InputSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -273,6 +295,26 @@ def product_delete():
 
     return redirect(url_for('producttable'))
 
+
+@app.route('/hansoltable')
+def hansoltable():
+    form = HansolInputForm()
+    form1 = HansolEditForm()
+    form2 = HansolDeleteForm()
+    return render_template('hansolTable.html', form=form, form1=form1, form2=form2)
+
+@app.route('/hansol_create', methods=["POST", "GET"])
+def hansol_create():
+    pass
+
+
+@app.route('/hansol_edit', methods=["POST", "GET"])
+def hansol_edit():
+    pass
+
+@app.route('/hansol_delete', methods=["POST", "GET"])
+def hansol_delete():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
