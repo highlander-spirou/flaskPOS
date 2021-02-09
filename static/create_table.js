@@ -19,6 +19,7 @@ $(document).ready(function(){
             tableData += '<td><div contenteditable="true">'+value.hs_code+'</div></td>';
             tableData += '<td><div contenteditable="true">'+value.cargo_item+'</div></td>';    
             tableData += '<td><div contenteditable="true">'+value.invoice_value+'</div></td>'; 
+            tableData += '<td><div contenteditable="true">'+value.bag_number+'</div></td>'; 
             tableData += '<td><div contenteditable="true">'+value.zipcode+'</div></td>'; 
             tableData += '<td><button class="btn btn-outline-secondary"><span class="btn_edit">Edit</span></button></td>';
             tableData += '<td><button class="btn btn-outline-danger"><span class="btn_delete">Delete</span></button></td>';

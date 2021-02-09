@@ -22,6 +22,7 @@ $(document).on('click','.btn_edit', function(){
     var col12=currentRow.find("td:eq(11)").text();
     var col13=currentRow.find("td:eq(12)").text();
     var col14=currentRow.find("td:eq(13)").text();
+    var col15=currentRow.find("td:eq(14)").text();
 
     console.log(`${col2}, ${col3}, ${col4}, ${col5}, ${col6}, ${col7}`)
     
@@ -38,7 +39,8 @@ $(document).on('click','.btn_edit', function(){
     $('#hs_codeEdit').val(col11);
     $('#cargo_itemEdit').val(col12);
     $('#invoice_valueEdit').val(col13);
-    $('#zipcodeEdit').val(col14);
+    $('#bag_numberEdit').val(col14);
+    $('#zipcodeEdit').val(col15);
 });
 
 $(document).on('click', '.btn_delete', function(){

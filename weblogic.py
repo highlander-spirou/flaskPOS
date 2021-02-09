@@ -1,80 +1,97 @@
 import numpy as np
+from datetime import datetime
 import pandas as pd
-# from flask_sqlalchemy import SQLAlchemy
 from app import db
 import xlwings as xw
 from file_template import get_file_template_dir
+from create_table import table_for_sheet0_file1, table_for_sheet0_file1, table_for_sheet1_file1
 
 
 template1_dir = get_file_template_dir()
-
-# QUERY FROM INPUT
-
-query_hansol = """
-SELECT * from Input
-WHERE consignee_name = "HANSOLL TEXTILE"
-"""
-df_hansol = pd.read_sql_query(query_hansol, db.engine)
-df_hansol['consignee_name'] = df_hansol[['consignee_name', 'client_name']].agg('\n'.join, axis=1)
+today = datetime.now().strftime('%Y-%m-%d')
+filename = "WORLD-MNF-" + today
 
 
-query_not_hansoll = """
-SELECT * from Input
-WHERE consignee_name != "HANSOLL TEXTILE"
-"""
-df_not_hansol = pd.read_sql_query(query_not_hansoll, db.engine)
+def get_dbs():
 
-#############################################################
+    # QUERY FROM INPUT
 
-
-####QUERY FROM HANSOLL
-
-query_hansol_2 = "SELECT * FROM Hansoll"
-df_hansol_1 = pd.read_sql_query(query_hansol_2, db.engine)
-
-#########################################################
+    query_hansol = """
+    SELECT * from Input
+    WHERE consignee_name = "HANSOLL TEXTILE"
+    """
+    df_hansol = pd.read_sql_query(query_hansol, db.engine)
+    df_hansol['consignee_name'] = df_hansol[['consignee_name', 'client_name']].agg('\n'.join, axis=1)
 
 
+    query_not_hansoll = """
+    SELECT * from Input
+    WHERE consignee_name != "HANSOLL TEXTILE"
+    """
+    df_not_hansol = pd.read_sql_query(query_not_hansoll, db.engine)
 
-#### SHEET 1 (INDEX 0) LOGIC  #####################
-df = pd.concat([df_hansol,df_not_hansol],ignore_index=True)
+    #############################################################
 
-def sheet_0():
+
+    ####QUERY FROM HANSOLL #######################
+
+    query_hansol_2 = "SELECT * FROM Hansoll"
+    df_hansol_1 = pd.read_sql_query(query_hansol_2, db.engine)
+
+    #########################################################
+
+
+    return df_hansol, df_not_hansol, df_hansol_1
+
+
+def concate_df(df1, df2):
+    df = pd.concat([df1,df2],ignore_index=True)
+    return df
+
+# file 1 tên là WORLD-MNF-(2021-02-06)
+def copy_template_file1(filename):
+    app = xw.App(visible=False)
+    wbExcel = xw.Book(template1_dir + '/template_file1.xlsx')
+    file_dir = template1_dir + '/created_file/' + filename + '.xlsx'
+    wbExcel.save(file_dir)
+    wbExcel.close()
+    app.quit()
+
+    return file_dir
+
+# file 1 tên là WORLD-MNF-(2021-02-06)
+def copy_to_file_1(df, filename):
+
+    file_dir = copy_template_file1(filename)
+    df_complete = table_for_sheet0_file1(df)
+    df_halves = table_for_sheet1_file1(df)
 
     app = xw.App(visible=False)
-    wbExcel = xw.Book(template1_dir + '/new.xlsx')
-    active_worksheet = wbExcel.sheets[0]
+    wbExcel = xw.Book(file_dir)
 
-
-    active_worksheet.range('E3').options(index=False, header=False).value = df['bill_number']
-    active_worksheet.range('H3').options(index=False, header=False).value = df['cargo_pcs']
-    active_worksheet.range('I3').options(index=False, header=False).value = df['cargo_weight']
-    active_worksheet.range('K3').options(index=False, header=False).value = df['pp_cc']
-    active_worksheet.range('L3').options(index=False, header=False).value = df['hs_code']
-    active_worksheet.range('M3').options(index=False, header=False).value = df['cargo_item']
-    active_worksheet.range('N3').options(index=False, header=False).value = df['invoice_value']
-    active_worksheet.range('O3').options(index=False, header=False).value = df['shipper_name']
-    active_worksheet.range('T3').options(index=False, header=False).value = df['consignee_name']
-    active_worksheet.range('U3').options(index=False, header=False).value = df['consignee_address']
-    active_worksheet.range('X3').options(index=False, header=False).value = df['consignee_telephone']
-    active_worksheet.range('AA3').options(index=False, header=False).value = df['zipcode']
-
+    active_worksheet_0 = wbExcel.sheets[0]
+    active_worksheet_0.range('A2').options(index=False, header=False).value = df_complete
+  
+    active_worksheet_1 = wbExcel.sheets[1]
+    active_worksheet_1.range('A2').options(index=False, header=False).value = df_halves
 
     wbExcel.save()
     wbExcel.close()
     app.quit()
+    
+    print('done')
 
 
+def tao_lao():
+    column_names = ["id", "bill_number", "shipper_name", "cargo_item", "cargo_pcs", "cargo_weight", "consignee_name"]
+
+    # df_hansol_2 = df_hansol.reindex(columns=column_names)
+
+    # df_hansol_3 =  pd.concat([df_hansol_1,df_hansol_2],ignore_index=True)
 
 
+df_hansol, df_not_hansol, df_hansol_1 = get_dbs()
 
-#### SHEET 2 (INDEX 1) LOGIC  #####################
+df = concate_df(df_hansol,df_not_hansol)
 
-column_names = ["id", "bill_number", "shipper_name", "cargo_item", "cargo_pcs", "cargo_weight", "consignee_name"]
-
-df_hansol_2 = df_hansol.reindex(columns=column_names)
-
-df_hansol_3 =  pd.concat([df_hansol_1,df_hansol_2],ignore_index=True)
-
-
-print(df_hansol_3)
+copy_to_file_1(df, filename) 
