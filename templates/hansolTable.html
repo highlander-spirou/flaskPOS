@@ -68,24 +68,28 @@
 
 <br>
 
-<!-- <div class="company-table-wrapper">
+<div class="hansol-table-wrapper">
     <table>
         <th>ID</th>
-        <th>Company</th>
-        <th>Address</th>
-        <th>Telephone</th>
-        <th>Zip code</th>
-        {% for company in data_companies %}
+        <th>Bill Number</th>
+        <th>Shipper Name</th>
+        <th>Cargo Item</th>
+        <th>Cargo PCS</th>
+        <th>Cargo Weight</th>
+        <th>Consignee Name</th>
+        {% for hansol in data_hansols %}
             <tr>
-                <td>{{company.id}}</td>
-                <td>{{company.company}}</td>
-                <td>{{company.address}}</td>
-                <td>{{company.telephone}}</td>
-                <td>{{company.zipcode}}</td>
+                <td>{{hansol.id}}</td>
+                <td>{{hansol.bill_number}}</td>
+                <td>{{hansol.shipper_name}}</td>
+                <td>{{hansol.cargo_item}}</td>
+                <td>{{hansol.cargo_pcs}}</td>
+                <td>{{hansol.cargo_weight}}</td>
+                <td>{{hansol.consignee_name}}</td>
             </tr>
         {% endfor %}
     </table>
-</div> -->
+</div>
 
 <script src="../static/edit_create_2.js"></script>
 {% endblock %}

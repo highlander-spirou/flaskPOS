@@ -301,20 +301,52 @@ def hansoltable():
     form = HansolInputForm()
     form1 = HansolEditForm()
     form2 = HansolDeleteForm()
-    return render_template('hansolTable.html', form=form, form1=form1, form2=form2)
+    data_hansols = Hansoll.query.all()
+    return render_template('hansolTable.html', data_hansols=data_hansols, form=form, form1=form1, form2=form2)
 
 @app.route('/hansol_create', methods=["POST", "GET"])
 def hansol_create():
-    pass
+    bill_number = request.form['bill_number']
+    shipper_name = request.form['shipper_name']
+    consignee_name = request.form['consignee_name']
+    cargo_pcs = request.form['cargo_pcs']
+    cargo_weight = request.form['cargo_weight']
+    cargo_item = request.form['cargo_item']
 
+    new_instance = Hansoll(bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight, consignee_name)
+    db.session.add(new_instance)
+    db.session.commit()
+    return redirect(url_for('hansoltable'))
 
 @app.route('/hansol_edit', methods=["POST", "GET"])
 def hansol_edit():
-    pass
+    id = request.form['id']
+    bill_number = request.form['bill_number']
+    shipper_name = request.form['shipper_name']
+    consignee_name = request.form['consignee_name']
+    cargo_pcs = request.form['cargo_pcs']
+    cargo_weight = request.form['cargo_weight']
+    cargo_item = request.form['cargo_item']
+
+    hansol = Hansoll.query.get(id)
+    hansol.bill_number = bill_number
+    hansol.shipper_name = shipper_name
+    hansol.consignee_name = consignee_name
+    hansol.cargo_pcs = cargo_pcs
+    hansol.cargo_weight = cargo_weight
+    hansol.cargo_item = cargo_item
+    db.session.commit()
+
+    return redirect(url_for('hansoltable'))
 
 @app.route('/hansol_delete', methods=["POST", "GET"])
 def hansol_delete():
-    pass
+    del_id = request.form['id']
+    instance = Hansoll.query.get(del_id)
+    db.session.delete(instance)
+    db.session.commit()
+
+    return redirect(url_for('hansoltable'))
 
 if __name__ == '__main__':
     app.run(debug=True)
