@@ -154,7 +154,6 @@ def copy_to_file_2(df, df_hansol, filename, bag, message):
     active_worksheet_0.range('A6').options(index=False, header=False).value = df_full_sheet0
     
     last_row = active_worksheet_0.range('A6').end('down').row + 1
-    active_worksheet_0.range((last_row, 1),(last_row, 12)).merge()
     active_worksheet_0.cells(last_row, "A").value = message
 
 
@@ -170,9 +169,19 @@ def copy_to_file_2(df, df_hansol, filename, bag, message):
 
 ###################################
 
+data1 = input("MWAB NO")
+data2 = input("FLT NO")
+bag_number = input("Bag Number")
+message = input("Message")
+
+
 
 df_hansol, df_not_hansol = get_dbs()
 df = concate_df(df_hansol, df_not_hansol)
 
-copy_to_file_1(df, filename1, "nhan", "nhu")
-copy_to_file_2(df, df_hansol, filename2, 5,"hello this is the last")
+copy_to_file_1(df, filename1, data1, data2)
+copy_to_file_2(df, df_hansol, filename2, bag_number,message)
+
+
+file_final = get_file_template_dir() + r'\created_file'
+print(file_final)
