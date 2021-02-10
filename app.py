@@ -101,12 +101,12 @@ class Hansoll(db.Model):
     consignee_address = db.Column(db.String(500)) 
     consignee_telephone = db.Column(db.String(64))
     cargo_item = db.Column(db.String(64))
-    cargo_pcs = db.Column(db.Integer)
-    cargo_weight = db.Column(db.Float)
+    cargo_pcs = db.Column(db.String(64))
+    cargo_weight = db.Column(db.String(64))
     pp_cc = db.Column(db.String(5))
-    invoice_value = db.Column(db.Float)    
+    invoice_value = db.Column(db.String(64))
 
-    def __init__(self, bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight, consignee_name):
+    def __init__(self, consignee_name, bill_number="", shipper_name="", cargo_item="", cargo_pcs="", cargo_weight=""):
         self.bill_number = bill_number
         self.shipper_name = shipper_name
         self.cargo_item = cargo_item
@@ -354,7 +354,7 @@ def hansol_create():
     cargo_weight = request.form['cargo_weight']
     cargo_item = request.form['cargo_item']
 
-    new_instance = Hansoll(bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight, consignee_name)
+    new_instance = Hansoll(consignee_name, bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight)
     db.session.add(new_instance)
     db.session.commit()
     return redirect(url_for('hansoltable'))

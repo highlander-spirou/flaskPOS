@@ -68,12 +68,12 @@ class ProductDeleteForm(FlaskForm):
 
 
 class HansolInputForm(FlaskForm):
-    bill_number = StringField('bill_number', validators=[DataRequired()])
-    shipper_name = StringField('shipper_name', validators=[DataRequired()])
-    consignee_name = StringField('consignee_name', validators=[DataRequired()], widget=TextArea())
-    cargo_pcs = IntegerField('cargo_pcs', validators=[DataRequired()])
-    cargo_weight = FloatField('cargo_weight', validators=[DataRequired()])    
-    cargo_item = StringField('cargo_item', validators=[DataRequired()])
+    bill_number = StringField('bill_number')
+    shipper_name = StringField('shipper_name')
+    consignee_name = StringField('consignee_name', validators=[DataRequired()])
+    cargo_pcs = StringField('cargo_pcs')
+    cargo_weight = StringField('cargo_weight')    
+    cargo_item = StringField('cargo_item')
     submit = SubmitField('Submit')
 
 
