@@ -1,0 +1,90 @@
+{% extends 'index.html' %}
+
+{% block title %}Enclosed Data{% endblock %}
+
+{% block content %}
+<br>
+
+<span class="btn-company"><button type="button" id="create" class="btn btn-secondary">Show</button></span>
+<span class="btn-company"><button type="button" id="delete" class="btn btn-danger">Delete</button></span>
+<span class="btn-company"><button type="button" id="cancel" class="btn btn-outline-dark">Cancel</button></span>
+
+<br>
+<br>
+<div class="create-wrapper">
+<form action="{{url_for('enclosed_create')}}" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+      <div>
+        {{ form.enclosed(class='sth', placeholder="bill_number", id="enclosedInput") }}
+        {{ form.shipper_name(class='sth',placeholder="shipper_name", id="shipper_nameInput") }}
+        {{ form.consignee_name(class='sth',placeholder="consignee_name", id="consignee_nameInput") }}
+        {{ form.consignee_address(class='sth',placeholder="consignee_address", id="consignee_nameInput") }}
+        {{ form.consignee_telephone(class='sth',placeholder="consignee_telephone", id="consignee_nameInput") }}
+        {{ form.cargo_pcs(class='sth',placeholder="cargo_pcs", id="cargo_pcsInput") }}
+        {{ form.cargo_weight(class='sth',placeholder="cargo_weight", id="cargo_weightInput") }}
+        {{ form.cargo_item(class='sth',placeholder="cargo_item", id="cargo_itemInput") }}
+        {{ form.pp_cc(class='sth',placeholder="pp_cc", id="cargo_itemInput") }}
+        {{ form.invoice_value(class='sth',placeholder="invoice_value", id="cargo_itemInput") }}
+        {{ form.bag_number(class='sth',placeholder="bag_number", id="cargo_itemInput") }}
+        
+      </div>
+      <br>
+      <div class="container">
+      {{ form.submit(class="btn btn-outline-success", value="Submit") }}
+    </div>
+  </form>
+</div>
+    
+<br>
+
+<div class="delete-wrapper">
+  <form action="{{url_for('enclosed_delete')}}" method="POST" novalidate>
+    {{ form2.hidden_tag() }}
+      <div>
+        {{ form2.id(class='sth', placeholder="ID", id="idDelete") }}
+      </div>
+      <br>
+      <div class="container">
+      {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
+    </div>
+  </form>
+</div>
+
+<br>
+
+<div class="hansol-table-wrapper">
+    <table>
+        <th>ID</th>
+        <th>Bill Number</th>
+        <th>Shipper Name</th>
+        <th>Cargo Item</th>
+        <th>Cargo PCS</th>
+        <th>Cargo Weight</th>
+        <th>Consignee Name</th>
+        <th>consignee_address</th>
+        <th>consignee_telephone</th>
+        <th>pp_cc</th>
+        <th>invoice_value</th>
+        <th>bag_number</th>
+        {% for enclose in data_enclosed %}
+            <tr>
+                <td>{{enclose.id}}</td>
+                <td>{{enclose.enclosed}}</td>
+                <td>{{enclose.shipper_name}}</td>
+                <td>{{enclose.cargo_item}}</td>
+                <td>{{enclose.cargo_pcs}}</td>
+                <td>{{enclose.cargo_weight}}</td>
+                <td>{{enclose.consignee_name}}</td>
+                <td>{{enclose.consignee_address}}</td>
+                <td>{{enclose.consignee_telephone}}</td>
+                <td>{{enclose.pp_cc}}</td>
+                <td>{{enclose.invoice_value}}</td>
+                <td>{{enclose.bag_number}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script src="../static/edit_create_2.js"></script>
+{% endblock %}
+

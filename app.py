@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import json
-from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm
 
 app = Flask(__name__)
 
@@ -97,10 +97,14 @@ class Hansoll(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     bill_number = db.Column(db.String(64))
     shipper_name = db.Column(db.String(64))
+    consignee_name = db.Column(db.String(64))
+    consignee_address = db.Column(db.String(500)) 
+    consignee_telephone = db.Column(db.String(64))
     cargo_item = db.Column(db.String(64))
     cargo_pcs = db.Column(db.Integer)
     cargo_weight = db.Column(db.Float)
-    consignee_name = db.Column(db.String(64))
+    pp_cc = db.Column(db.String(5))
+    invoice_value = db.Column(db.Float)    
 
     def __init__(self, bill_number, shipper_name, cargo_item, cargo_pcs, cargo_weight, consignee_name):
         self.bill_number = bill_number
@@ -113,6 +117,43 @@ class Hansoll(db.Model):
 
     def __repr__(self):
         return f"id: {self.id}, bill: {self.bill_number}, shipper: {self.shipper_name}, client: {self.consignee_name}"
+
+class Enclosed(db.Model):
+
+
+    __tablename__ = 'enclosed'
+    id = db.Column(db.Integer, primary_key = True)
+    bill_number = db.Column(db.String(64)) 
+    enclosed = db.Column(db.String(64)) 
+    shipper_name = db.Column(db.String(64)) 
+    consignee_address = db.Column(db.String(500)) 
+    consignee_telephone = db.Column(db.String(64))
+    cargo_item = db.Column(db.String(64)) 
+    cargo_pcs = db.Column(db.Integer) 
+    cargo_weight = db.Column(db.Float) 
+    consignee_name = db.Column(db.String(64)) 
+    pp_cc = db.Column(db.String(5)) 
+    invoice_value = db.Column(db.Float) 
+    bag_number = db.Column(db.String(64)) 
+
+    def __init__(self, enclosed, shipper_name, consignee_address, consignee_telephone, 
+    cargo_item, cargo_pcs, cargo_weight, consignee_name, pp_cc, invoice_value, bag_number, bill_number=""):
+        self.bill_number = bill_number
+        self.shipper_name = shipper_name
+        self.consignee_name = consignee_name #company name
+        self.consignee_address = consignee_address
+        self.consignee_telephone = consignee_telephone
+        self.cargo_pcs = cargo_pcs
+        self.cargo_weight = cargo_weight
+        self.pp_cc = pp_cc
+        self.cargo_item = cargo_item
+        self.invoice_value = invoice_value
+        self.bag_number = bag_number
+        self.enclosed = enclosed
+
+    def __repr__(self) -> str:
+        return f"id: {self.id}, enclosed: {self.enclosed}"
+
 
 class InputSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -347,6 +388,49 @@ def hansol_delete():
     db.session.commit()
 
     return redirect(url_for('hansoltable'))
+
+@app.route('/enclosedtable')
+def enclosedtable():
+    form = EnclosedForm()
+    form2 = DeleteForm()
+    data_enclosed = Enclosed.query.all()
+    return render_template('enclosedTable.html', data_enclosed=data_enclosed, form=form, form2=form2)
+
+@app.route('/enclosed_create', methods=["POST", "GET"])
+def enclosed_create():
+    enclosed = request.form['enclosed']
+    shipper_name = request.form['shipper_name']
+    consignee_name = request.form['consignee_name']
+    cargo_pcs = request.form['cargo_pcs']
+    cargo_weight = request.form['cargo_weight']
+    cargo_item = request.form['cargo_item']
+    consignee_address = request.form['consignee_address']
+    consignee_telephone = request.form['consignee_telephone']
+    pp_cc = request.form['pp_cc']
+    invoice_value = request.form['invoice_value']
+    bag_number = request.form['bag_number']
+
+    new_instance = Enclosed(enclosed, shipper_name, consignee_address, consignee_telephone, 
+    cargo_item, cargo_pcs, cargo_weight, consignee_name, pp_cc, invoice_value, bag_number)
+    
+    db.session.add(new_instance)
+    db.session.commit()
+    return redirect(url_for('enclosedtable'))
+
+@app.route('/enclosed_delete', methods=["POST", "GET"])
+def enclosed_delete():
+    del_id = request.form['id']
+    instance = Enclosed.query.get(del_id)
+    db.session.delete(instance)
+    db.session.commit()
+
+    return redirect(url_for('enclosedtable'))
+
+
+@app.route('/create_df')
+def create_df():
+    pass
+
 
 if __name__ == '__main__':
     app.run(debug=True)
