@@ -36,24 +36,6 @@ def get_dbs():
 
     return df_hansol, df_not_hansol
 
-#### INSTRUCTION ######
-
-
-### 1) ghép 2 dbs của get_dbs() lại
-
-# df_hansol, df_not_hansol = get_dbs()
-# df = concate_df(df_hansol, df_not_hansol)
-
-### 2) chạy copy_to_file_1()
-# copy_to_file_1(df, filename1)
-
-### 3) chạy copy_to_file_2()
-# copy_to_file_2(df, filename2)
-
-########################################
-
-########################################
-####### FILE 1 SECTION #################
 
 # file 1 tên là WORLD-MNF-(2021-02-06)
 def copy_template_file1(filename):
@@ -89,9 +71,6 @@ def copy_to_file_1(df, filename, data1, data2):
     
     print('done 1')
 
-
-####################################
-######### FILE 2 SECTION ###########
 
 def get_dbs_for_file2():
 
@@ -200,6 +179,7 @@ def copy_to_file_3(df, today):
         active_worksheet_0.range('H28').options(index=False, header=False).value = df_series.invoice_value
 
         wbExcel.save()
+        wbExcel.to_pdf()
         wbExcel.close()
         app.quit()
         
