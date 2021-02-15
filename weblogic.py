@@ -167,6 +167,45 @@ def copy_to_file_2(df, df_hansol, filename, bag, message):
     
     print('done 2')
 
+
+def copy_template_file3(filename):
+    app = xw.App(visible=False)
+    wbExcel = xw.Book(template1_dir + '/template_file3.xlsx')
+    file_dir = template1_dir + '/created_file/' + filename + '.xlsx'
+    wbExcel.save(file_dir)
+    wbExcel.close()
+    app.quit()
+
+    return file_dir
+
+def copy_to_file_3(df, today):
+    df_length = len(df.index)
+    for i in range(df_length):
+        df_series = df.loc[i,:]
+        filename= "Invoice " + df_series.bill_number
+        file_dir = copy_template_file3(filename)
+        app = xw.App(visible=False)
+        wbExcel = xw.Book(file_dir)
+        active_worksheet_0 = wbExcel.sheets[0]
+
+        active_worksheet_0.range('A3').options(index=False, header=False).value = df_series.shipper_name
+        active_worksheet_0.range('E4').options(index=False, header=False).value = df_series.gd
+        active_worksheet_0.range('J4').options(index=False, header=False).value = today
+        active_worksheet_0.range('A7').options(index=False, header=False).value = df_series.consignee_name
+        active_worksheet_0.range('A8').options(index=False, header=False).value = df_series.consignee_address
+        active_worksheet_0.range('G20').options(index=False, header=False).value = df_series.bill_number
+        active_worksheet_0.range('H22').options(index=False, header=False).value = df_series.cargo_weight
+        active_worksheet_0.range('C27').options(index=False, header=False).value = df_series.cargo_item
+        active_worksheet_0.range('H27').options(index=False, header=False).value = df_series.invoice_value
+        active_worksheet_0.range('H28').options(index=False, header=False).value = df_series.invoice_value
+
+        wbExcel.save()
+        wbExcel.close()
+        app.quit()
+        
+        print('done 3 - ' + str(i))
+
+
 ###################################
 
 data1 = input("MWAB NO")
@@ -179,9 +218,12 @@ message = input("Message")
 df_hansol, df_not_hansol = get_dbs()
 df = concate_df(df_hansol, df_not_hansol)
 
+df_more_10 = df[df["cargo_weight"]>=10]
+df_more_10["gd"] = "GD-" + datetime.now().strftime('%d-%m-%Y')
+
 copy_to_file_1(df, filename1, data1, data2)
 copy_to_file_2(df, df_hansol, filename2, bag_number,message)
-
+copy_to_file_3(df_more_10, today)
 
 file_final = get_file_template_dir() + r'\created_file'
 print(file_final)
