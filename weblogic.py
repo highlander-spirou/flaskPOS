@@ -221,9 +221,10 @@ df = concate_df(df_hansol, df_not_hansol)
 df_more_10 = df[df["cargo_weight"]>=10]
 df_more_10["gd"] = "GD-" + datetime.now().strftime('%d-%m-%Y')
 
+file_final = get_file_template_dir() + r'\created_file'
+print(file_final)
+
 copy_to_file_1(df, filename1, data1, data2)
 copy_to_file_2(df, df_hansol, filename2, bag_number,message)
 copy_to_file_3(df_more_10, today)
 
-file_final = get_file_template_dir() + r'\created_file'
-print(file_final)
