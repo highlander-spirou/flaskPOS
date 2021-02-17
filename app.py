@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
-import json
-from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm
+import glob
+import file_template
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm, delAllForm
+from file_template import get_file_template_dir
 
 app = Flask(__name__)
 
@@ -427,10 +429,39 @@ def enclosed_delete():
     return redirect(url_for('enclosedtable'))
 
 
-@app.route('/create_df')
-def create_df():
-    pass
+@app.route('/delete_all', methods=["POST", "GET"])
+def delete_all():
+    form = delAllForm()
+    if request.method == 'POST':
+        delete_message = request.form['del_id']
+        if delete_message == 'I ENSURE TO DELETE ALL DATA':
+            path = get_file_template_dir()
+            file_pdf = path + r'/created_file/*.pdf'
+            file_xlsx = path + r'/created_file/*.xlsx'
+            file_xlsm = path + r'/created_file/*.xlsm'
+            files1 = glob.glob(file_pdf)
+            files2 = glob.glob(file_xlsx)
+            files3 = glob.glob(file_xlsm)
+            for f in files1:
+                os.remove(f)
+            for f in files2:
+                os.remove(f)
+            for f in files3:
+                os.remove(f)
+            
+
+            Input.query.delete()
+            db.session.commit()
+            Hansoll.query.delete()
+            db.session.commit()
+            Enclosed.query.delete()
+            db.session.commit()
+
+    return render_template('deleteAll.html', form=form)
+
+    
+
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

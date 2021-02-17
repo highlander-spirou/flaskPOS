@@ -105,3 +105,7 @@ class EnclosedForm(FlaskForm):
     invoice_value = FloatField('invoice_value', validators=[DataRequired()])
     bag_number = StringField('bag_number', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class delAllForm(FlaskForm):
+    del_id = StringField('DELETE ALL', validators=[DataRequired()])
+    submit = SubmitField('DELETE')
