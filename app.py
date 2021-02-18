@@ -6,6 +6,8 @@ import glob
 import file_template
 from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm, delAllForm
 from file_template import get_file_template_dir
+from subprocess import Popen, PIPE, STDOUT
+
 
 app = Flask(__name__)
 
@@ -428,6 +430,23 @@ def enclosed_delete():
 
     return redirect(url_for('enclosedtable'))
 
+@app.route('/sth')
+def sth():
+    command1= "python"
+    command2 = "weblogic.py"
+    input1 = "a"
+    input2 = "b"
+    input3 = "c"
+    input4 = "d"
+    input_string = f'{input1}\n{input2}\n{input3}\n{input4}\n'.encode()
+    args = [command1,command2]
+
+    proc = Popen(args, stdout=PIPE, stdin=PIPE, stderr=STDOUT, shell=True)
+    grep_stdout = proc.communicate(input=input_string)[0]
+    
+    message="DONE"
+    return redirect(url_for('index'))
+
 
 @app.route('/delete_all', methods=["POST", "GET"])
 def delete_all():
@@ -464,4 +483,4 @@ def delete_all():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
