@@ -160,7 +160,7 @@ def copy_template_file3(filename):
 def copy_to_file_3(df, today):
     df_length = len(df.index)
     for i in range(df_length):
-        df_series = df.loc[i,:]
+        df_series = df.iloc[i]
         filename= "Invoice " + df_series.bill_number
         file_dir = copy_template_file3(filename)
         app = xw.App(visible=False)
@@ -200,7 +200,7 @@ df = concate_df(df_hansol, df_not_hansol)
 
 df_more_10 = df[df["cargo_weight"]>=10]
 df_more_10["gd"] = "GD-" + datetime.now().strftime('%d-%m-%Y')
-
+print(df_more_10)
 file_final = get_file_template_dir() + r'\created_file'
 print(file_final)
 
