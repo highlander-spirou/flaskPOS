@@ -200,7 +200,7 @@ df = concate_df(df_hansol, df_not_hansol)
 
 df_more_10 = df[df["cargo_weight"]>=10]
 df_more_10["gd"] = "GD-" + datetime.now().strftime('%d-%m-%Y')
-print(df_more_10)
+
 file_final = get_file_template_dir() + r'\created_file'
 print(file_final)
 
