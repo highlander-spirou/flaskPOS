@@ -109,3 +109,10 @@ class EnclosedForm(FlaskForm):
 class delAllForm(FlaskForm):
     del_id = StringField('DELETE ALL', validators=[DataRequired()])
     submit = SubmitField('DELETE')
+
+class sthForm(FlaskForm):
+    data1 = StringField('MWAB NO', validators=[DataRequired()])
+    data2 = StringField('FLT NO', validators=[DataRequired()])
+    bag_number = StringField('Bag Number', validators=[DataRequired()])
+    message = StringField('Message', validators=[DataRequired()], widget=TextArea())
+    submit = SubmitField('CREATE')

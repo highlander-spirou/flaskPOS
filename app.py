@@ -4,7 +4,7 @@ from flask_marshmallow import Marshmallow
 import os
 import glob
 import file_template
-from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm, delAllForm
+from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm, delAllForm, sthForm
 from file_template import get_file_template_dir
 from subprocess import Popen, PIPE, STDOUT
 
@@ -430,22 +430,27 @@ def enclosed_delete():
 
     return redirect(url_for('enclosedtable'))
 
-@app.route('/sth')
+@app.route('/sth', methods=["POST", "GET"])
 def sth():
-    command1= "python"
-    command2 = "weblogic.py"
-    input1 = "a"
-    input2 = "b"
-    input3 = "c"
-    input4 = "d"
-    input_string = f'{input1}\n{input2}\n{input3}\n{input4}\n'.encode()
-    args = [command1,command2]
+    form = sthForm()
+    if request.method == "POST":
 
-    proc = Popen(args, stdout=PIPE, stdin=PIPE, stderr=STDOUT, shell=True)
-    grep_stdout = proc.communicate(input=input_string)[0]
-    
-    message="DONE"
-    return redirect(url_for('index'))
+        command1= "python"
+        command2 = "weblogic.py"
+        input1 = request.form["data1"]
+        input2 = request.form["data2"]
+        input3 = request.form["bag_number"]
+        input4 = request.form["message"]
+        input_string = f'{input1}\n{input2}\n{input3}\n{input4}\n'.encode()
+        args = [command1,command2]
+
+        proc = Popen(args, stdout=PIPE, stdin=PIPE, stderr=STDOUT, shell=True)
+        grep_stdout = proc.communicate(input=input_string)[0]
+        
+        message="DONE"
+        return render_template('create_sth.html', message=message, form=form)
+
+    return render_template('create_sth.html', form=form)
 
 
 @app.route('/delete_all', methods=["POST", "GET"])

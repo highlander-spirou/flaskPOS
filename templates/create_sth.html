@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block title %} Table{% endblock %}
+
+{% block content %}
+
+<div class="message">
+    <h1>{{message}}</h1>
+</div>
+
+<div class="form-wrapper">
+    <form action="{{url_for('sth')}}" method="post">
+
+        {{ form.hidden_tag() }}
+        {{ form.data1(placeholder="MWAB NO", id="idEdit") }}
+        {{ form.data2(placeholder="FLT NO", id="idEdit") }}
+        {{ form.bag_number(placeholder="BAG NUMBER", id="idEdit") }}
+        {{ form.message(placeholder="message", id="idEdit") }}
+        <br>
+        <br>
+        {{ form.submit(class="btn btn-outline-success", value="Submit") }}
+    </form>
+</div>
+{% endblock %}
