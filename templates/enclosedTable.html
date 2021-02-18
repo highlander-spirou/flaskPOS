@@ -4,51 +4,54 @@
 
 {% block content %}
 <br>
-
-<span class="btn-company"><button type="button" id="delete" class="btn btn-danger">Delete</button></span>
-<span class="btn-company"><button type="button" id="cancel" class="btn btn-outline-dark">Cancel</button></span>
-
-<br>
-<br>
-<div class="create-wrapper">
-<form action="{{url_for('enclosed_create')}}" method="POST" novalidate>
-    {{ form.hidden_tag() }}
-      <div>
-        {{ form.enclosed(class='sth', placeholder="bill_number", id="enclosedInput") }}
-        {{ form.shipper_name(class='sth',placeholder="shipper_name", id="shipper_nameInput") }}
-        {{ form.consignee_name(class='sth',placeholder="consignee_name", id="consignee_nameInput") }}
-        {{ form.consignee_address(class='sth',placeholder="consignee_address", id="consignee_nameInput") }}
-        {{ form.consignee_telephone(class='sth',placeholder="consignee_telephone", id="consignee_nameInput") }}
-        {{ form.cargo_pcs(class='sth',placeholder="cargo_pcs", id="cargo_pcsInput") }}
-        {{ form.cargo_weight(class='sth',placeholder="cargo_weight", id="cargo_weightInput") }}
-        {{ form.cargo_item(class='sth',placeholder="cargo_item", id="cargo_itemInput") }}
-        {{ form.pp_cc(class='sth',placeholder="pp_cc", id="cargo_itemInput") }}
-        {{ form.invoice_value(class='sth',placeholder="invoice_value", id="cargo_itemInput") }}
-        {{ form.bag_number(class='sth',placeholder="bag_number", id="cargo_itemInput") }}
-        
-      </div>
-      <br>
-      <div class="container">
-      {{ form.submit(class="btn btn-outline-success", value="Submit") }}
-    </div>
-  </form>
-</div>
-    
-<br>
-
-<div class="delete-wrapper">
-  <form action="{{url_for('enclosed_delete')}}" method="POST" novalidate>
-    {{ form2.hidden_tag() }}
-      <div>
-        {{ form2.id(class='sth', placeholder="ID", id="idDelete") }}
-      </div>
-      <br>
-      <div class="container">
-      {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
-    </div>
-  </form>
+<div class="container">
+  <span class="btn-company"><button type="button" id="delete" class="btn btn-danger">Delete</button></span>
+  <span class="btn-company"><button type="button" id="cancel" class="btn btn-outline-dark">Cancel</button></span>
 </div>
 
+<br>
+<br>
+<div class="container">
+  <div class="create-wrapper">
+  <form action="{{url_for('enclosed_create')}}" method="POST" novalidate>
+      {{ form.hidden_tag() }}
+        <div>
+          {{ form.enclosed(placeholder="bill_number", id="enclosedInput") }}
+          {{ form.shipper_name(placeholder="shipper_name", id="shipper_nameInput") }}
+          {{ form.consignee_name(placeholder="consignee_name", id="consignee_nameInput") }}
+          {{ form.consignee_address(placeholder="consignee_address", id="consignee_nameInput") }}
+          {{ form.consignee_telephone(placeholder="consignee_telephone", id="consignee_nameInput") }}
+          {{ form.cargo_pcs(placeholder="cargo_pcs", id="cargo_pcsInput") }}
+          {{ form.cargo_weight(placeholder="cargo_weight", id="cargo_weightInput") }}
+          {{ form.cargo_item(placeholder="cargo_item", id="cargo_itemInput") }}
+          {{ form.pp_cc(placeholder="pp_cc", id="cargo_itemInput") }}
+          {{ form.invoice_value(placeholder="invoice_value", id="invoice_valueInput") }}
+          {{ form.bag_number(placeholder="bag_number", id="cargo_itemInput") }}
+          
+        </div>
+        <br>
+        <div class="container">
+        {{ form.submit(class="btn btn-outline-success", value="Submit") }}
+      </div>
+    </form>
+  </div>
+      
+  <br>
+
+  <div class="delete-wrapper">
+    <form action="{{url_for('enclosed_delete')}}" method="POST" novalidate>
+      {{ form2.hidden_tag() }}
+        <div>
+          {{ form2.id(class='sth', placeholder="ID", id="idDelete") }}
+        </div>
+        <br>
+        <div class="container">
+        {{ form2.submit(class="btn btn-outline-success", value="Submit") }}
+      </div>
+    </form>
+  </div>
+
+</div>
 <br>
 
 <div class="hansol-table-wrapper">
@@ -85,5 +88,6 @@
 </div>
 
 <script src="../static/edit_create_2.js"></script>
+<script src="../static/autofill_inenclosed.js"></script>
 {% endblock %}
 

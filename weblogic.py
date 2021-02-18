@@ -37,18 +37,17 @@ def get_dbs():
     return df_hansol, df_not_hansol
 
 
-# file 1 tên là WORLD-MNF-(2021-02-06)
+
 def copy_template_file1(filename):
     app = xw.App(visible=False)
-    wbExcel = xw.Book(template1_dir + '/template_file1.xlsx')
-    file_dir = template1_dir + '/created_file/' + filename + '.xlsx'
+    wbExcel = xw.Book(template1_dir + '/template_file1.xlsm')
+    file_dir = template1_dir + '/created_file/' + filename + '.xlsm'
     wbExcel.save(file_dir)
     wbExcel.close()
     app.quit()
 
     return file_dir
 
-# file 1 tên là WORLD-MNF-(2021-02-06)
 def copy_to_file_1(df, filename, data1, data2):
 
     
@@ -193,7 +192,8 @@ data2 = input("FLT NO")
 bag_number = input("Bag Number")
 message = input("Message")
 
-
+file_final = get_file_template_dir() + r'\created_file'
+print(file_final)
 
 df_hansol, df_not_hansol = get_dbs()
 df = concate_df(df_hansol, df_not_hansol)
@@ -201,8 +201,6 @@ df = concate_df(df_hansol, df_not_hansol)
 df_more_10 = df[df["cargo_weight"]>=10]
 df_more_10["gd"] = "GD-" + datetime.now().strftime('%d-%m-%Y')
 
-file_final = get_file_template_dir() + r'\created_file'
-print(file_final)
 
 copy_to_file_1(df, filename1, data1, data2)
 copy_to_file_2(df, df_hansol, filename2, bag_number,message)
