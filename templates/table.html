@@ -4,35 +4,52 @@
 
 {% block content %}
 
+<div class="container-fluid">
 <div class="edit-wrapper">
     <form action="{{url_for('table')}}" method="post">
         {{ form.hidden_tag() }}
-        {{ form.id(class='sth', placeholder="ID", id="idEdit") }}
-        {{ form.bill_number(class='sth', placeholder="bill_number", id="bill_numberEdit") }}
-        {{ form.shipper_name (class='sth',placeholder="shipper_name", id="shipper_nameEdit") }}
-        {{ form.consignee_name (class='sth',placeholder="consignee_name", id="consignee_nameEdit") }}
+        {{ form.id.label }}
+        {{ form.id( placeholder="ID", id="idEdit") }}
+        {{ form.bill_number.label }}
+        {{ form.bill_number( placeholder="bill_number", id="bill_numberEdit") }}
+        {{ form.shipper_name.label }}
+        {{ form.shipper_name (placeholder="shipper_name", id="shipper_nameEdit") }}
+        {{ form.consignee_name.label }}
+        {{ form.consignee_name (placeholder="consignee_name", id="consignee_nameEdit") }}
         <br>
         <br>
         <div>
-          {{ form.client_name (class='sth', placeholder="client_name", id="client_nameEdit") }}
-          {{ form.consignee_address (class='sth',placeholder="consignee_address ", id="consignee_addressEdit") }}
-          {{ form.consignee_telephone (class='sth',placeholder="consignee_telephone ", id="consignee_telephoneEdit") }}
+          {{ form.client_name.label }}
+          {{ form.client_name ( placeholder="client_name", id="client_nameEdit") }}
+          {{ form.consignee_address.label }}
+          {{ form.consignee_address (placeholder="consignee_address ", id="consignee_addressEdit") }}
+          {{ form.consignee_telephone.label }}
+          {{ form.consignee_telephone (placeholder="consignee_telephone ", id="consignee_telephoneEdit") }}
         </div>
         <br>
         <br>
         <div>
-          {{ form.cargo_pcs (class='sth', placeholder="cargo_pcs ", id="cargo_pcsEdit") }}
-          {{ form.cargo_weight (class='sth',placeholder="cargo_weight ", id="cargo_weightEdit") }}
-          {{ form.pp_cc (class='sth',placeholder="pp_cc ", id="pp_ccEdit") }}
+          {{ form.cargo_pcs.label }}
+          {{ form.cargo_pcs ( placeholder="cargo_pcs ", id="cargo_pcsEdit") }}
+          {{ form.cargo_weight.label }}
+          {{ form.cargo_weight (placeholder="cargo_weight ", id="cargo_weightEdit") }}
+          {{ form.pp_cc.label }}
+          {{ form.pp_cc (placeholder="pp_cc ", id="pp_ccEdit") }}
         </div>
         <br>
         <br>
         <div>
-          {{ form.hs_code (class='sth', placeholder="hs_code ", id="hs_codeEdit") }}
-          {{ form.cargo_item (class='sth',placeholder="cargo_item ", id="cargo_itemEdit") }}
-          {{ form.invoice_value (class='sth',placeholder="invoice_value ", id="invoice_valueEdit") }}
-          {{ form.bag_number(class='sth',placeholder="bag_number ", id="bag_numberEdit") }}
-          {{ form.zipcode(class='sth',placeholder="zipcode ", id="zipcodeEdit") }}
+          
+          {{ form.hs_code.label }}
+          {{ form.hs_code ( placeholder="hs_code ", id="hs_codeEdit") }}
+          {{ form.cargo_item.label }}
+          {{ form.cargo_item (placeholder="cargo_item ", id="cargo_itemEdit") }}
+          {{ form.invoice_value.label }}
+          {{ form.invoice_value (placeholder="invoice_value ", id="invoice_valueEdit") }}
+          {{ form.bag_number.label }}
+          {{ form.bag_number(placeholder="bag_number ", id="bag_numberEdit") }}
+          {{ form.zipcode.label }}
+          {{ form.zipcode(placeholder="zipcode ", id="zipcodeEdit") }}
         </div>
         <br>
         <br>
@@ -40,6 +57,7 @@
         {{ form.submit(class="btn btn-outline-success", value="Submit") }}
       </div>
     </form>
+</div>
 </div>
 
 <div class="delete-wrapper">

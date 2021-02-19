@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 import glob
-import file_template
+from file_template import get_file_template_dir
 from forms import InputForm, EditForm, DeleteForm, CompanyForm, CompanyDeleteForm, ProductForm, ProductDeleteForm, HansolInputForm, HansolEditForm, HansolDeleteForm, EnclosedForm, delAllForm, sthForm
 from file_template import get_file_template_dir
 from subprocess import Popen, PIPE, STDOUT
-
+from datetime import datetime
+from change_file_extension import create_src_code, write_src
 
 app = Flask(__name__)
 
@@ -447,7 +448,8 @@ def sth():
         proc = Popen(args, stdout=PIPE, stdin=PIPE, stderr=STDOUT, shell=True)
         grep_stdout = proc.communicate(input=input_string)[0]
         
-        message="DONE"
+        message="DONE \n" + get_file_template_dir() + r'\created_file'
+
         return render_template('create_sth.html', message=message, form=form)
 
     return render_template('create_sth.html', form=form)
@@ -483,7 +485,22 @@ def delete_all():
 
     return render_template('deleteAll.html', form=form)
 
-    
+@app.route('/create_vbs')
+def create_vbs():
+
+    file_dir = get_file_template_dir()
+    my_file = file_dir + '/runVBA.txt'
+    variable_name = datetime.now().strftime('%Y-%m-%d')
+    module_name_1 = "file1"
+    module_name_2 = "file2"
+    code_src_1 = create_src_code(variable_name, module_name_1, False)
+    code_src_2 = create_src_code(variable_name, module_name_2)
+
+    write_src(my_file, code_src_1, "VBA_1")
+    write_src(my_file, code_src_2, "VBA_2")
+
+    flash("VBS files created")
+    return redirect(url_for('sth'))
 
 if __name__ == '__main__':
     app.run(debug=True)
