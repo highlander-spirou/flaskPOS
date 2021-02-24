@@ -19,8 +19,8 @@
           {{ form.enclosed(placeholder="bill_number", id="enclosedInput") }}
           {{ form.shipper_name(placeholder="shipper_name", id="shipper_nameInput") }}
           {{ form.consignee_name(placeholder="consignee_name", id="consignee_nameInput") }}
-          {{ form.consignee_address(placeholder="consignee_address", id="consignee_nameInput") }}
-          {{ form.consignee_telephone(placeholder="consignee_telephone", id="consignee_nameInput") }}
+          {{ form.consignee_address(placeholder="consignee_address", id="consignee_addressInput") }}
+          {{ form.consignee_telephone(placeholder="consignee_telephone", id="consignee_telephoneInput") }}
           {{ form.cargo_pcs(placeholder="cargo_pcs", id="cargo_pcsInput") }}
           {{ form.cargo_weight(placeholder="cargo_weight", id="cargo_weightInput") }}
           {{ form.cargo_item(placeholder="cargo_item", id="cargo_itemInput") }}
@@ -89,5 +89,7 @@
 
 <script src="../static/edit_create_2.js"></script>
 <script src="../static/autofill_inenclosed.js"></script>
+<script src="../static/dynamic_query_3.js"></script>
 {% endblock %}
+
 
