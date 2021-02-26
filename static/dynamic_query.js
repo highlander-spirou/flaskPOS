@@ -19,7 +19,7 @@ const deepFind = (f, obj = {}) =>
 
 window.onload = function () {
   document.getElementById("consignee_nameInput").addEventListener("input", getText);
-  document.getElementById("pp_ccInput").value = "cc";
+  document.getElementById("pp_ccInput").value = "CC";
 };
 
 
